@@ -9,7 +9,7 @@ import java.net.http.HttpResponse;
  * Sends HTTP requests to Roblox API endpoints
  * 
  * @author Zackary Nelson, Bradley Patton, Peyton Slusser, Ulises Royal
- * @version 10-23-2026
+ * @version 10-24-2026
  * @since 9-3-2026
  */
 public class RobloxDataRetriever{

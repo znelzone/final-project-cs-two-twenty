@@ -6,7 +6,7 @@ import java.io.Serializable;
  * RobloxGame represents a game from the website Roblox.
  * 
  * @author Zackary Nelson, Bradley Patton, Peyton Slusser, and Ulises Royal
- * @version 10-4-2026
+ * @version 10-24-2026
  * @since 9-26-2026
  */
 public class RobloxGame implements Serializable{
