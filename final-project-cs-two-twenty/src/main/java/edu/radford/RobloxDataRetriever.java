@@ -3,6 +3,8 @@ import java.net.http.HttpClient;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * Retreives data about Roblox Games from the Roblox API.
@@ -155,11 +157,26 @@ public class RobloxDataRetriever{
                 //if a response came back
                 System.out.println("Universe ID: " + universeID);
                 System.out.println(json + "\n");
+
+                //converts API response from java string into JSON structure
+                JsonObject response = JsonParser.parseString(json).getAsJsonObject();
+
+                //get(0) means selecting the first game in the array
+                JsonObject gameData = response.getAsJsonArray("data").get(0).getAsJsonObject();
+
+                String name = gameData.get("name").getAsString();
+                int players = gameData.get("playing").getAsInt();
+
+                robloxGame.setGameName(name);
+                robloxGame.setCurrentPlayerCount(players);
             }
             
         }
 
     }
-
+    //lets RobloxGameCollection be read by other classes
+    public RobloxGameCollection getCollection() {
+        return ourCollection;
+    }
 
 }
