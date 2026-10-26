@@ -3,6 +3,9 @@ import java.net.http.HttpClient;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.io.IOException;
 
 /**
  * Retreives data about Roblox Games from the Roblox API.
@@ -155,11 +158,59 @@ public class RobloxDataRetriever{
                 //if a response came back
                 System.out.println("Universe ID: " + universeID);
                 System.out.println(json + "\n");
+
+                //converts API response from java string into JSON structure
+                JsonObject response = JsonParser.parseString(json).getAsJsonObject();
+
+                //get(0) means selecting the first game in the array
+                JsonObject gameData = response.getAsJsonArray("data").get(0).getAsJsonObject();
+
+                String name = gameData.get("name").getAsString();
+                int players = gameData.get("playing").getAsInt();
+
+                robloxGame.setGameName(name);
+                robloxGame.setCurrentPlayerCount(players);
+
+                long visits = gameData.get("visits").getAsLong();
+                int favorites = gameData.get("favoritedCount").getAsInt();
+                String genre = gameData.get("genre").getAsString();
+
+                robloxGame.setVisits(visits);
+                robloxGame.setFavorites(favorites);
+                robloxGame.setGenre(genre);
             }
             
         }
 
     }
+    //lets RobloxGameCollection be read by other classes
+    public RobloxGameCollection getCollection() {
+        return ourCollection;
+    }
 
+    /**
+     * Saves the currectn colleciton of Roblox games
+     * to the specified file
+     * 
+     * @param fileName the name of the file to save to
+     * @throws IOException if an error occurs while saving
+     * @since 10-25-2026
+     */
+    public void saveGameData(String fileName) throws IOException {
+        ourCollection.save(fileName);
+    }
+
+    /**
+     * Loads a previously saved collection of Roblox games
+     * from the specified file
+     * 
+     * @param fileName the name of the file to load
+     * @throws IOException if an error occurs while loading
+     * @throws ClassNotFoundException if the saved class cannot be found
+     * @since 10-25-2026
+     */
+    public void loadGameData(String fileName) throws IOException, ClassNotFoundException {
+        ourCollection = RobloxGameCollection.load(fileName);
+    }
 
 }

@@ -1,6 +1,7 @@
 package edu.radford;
 import java.util.Scanner;
 import com.google.gson.Gson;
+import java.util.ArrayList;
 
 /*
 Sources:
@@ -63,7 +64,18 @@ public class Assignment3Driver{
             //creates the roblox data retriever and creates a set of 10 temp games
             RobloxDataRetriever retriever = new RobloxDataRetriever();
             
-            retriever.updateGameData();
+            retriever.loadGameData("robloxGames.dat");
+            System.out.println("Loaded saved game data!");
+
+            //creates object that can sort games
+            FileSort sorter = new FileSort();
+
+            ArrayList<RobloxGame> sortedGames = sorter.sortByPlaters(retriever.getCollection());
+
+            for (RobloxGame sortedGame : sortedGames) {
+                System.out.println(sortedGame.getInfo());
+                System.out.println("-------------------------------");
+            }
 
             System.out.println("Finished Search!");
         } else if(begin.equalsIgnoreCase("n") || begin.equalsIgnoreCase("no")){
