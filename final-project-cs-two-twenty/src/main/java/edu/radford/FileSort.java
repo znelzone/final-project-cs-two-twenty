@@ -16,13 +16,12 @@ public class FileSort {
      * Sorts a collection of Roblox games by their current
      * player count in descending order
      * Creates a new ArrayList so that the oroginal collection
-     * doesnt change
+     * doesn't change.
      * 
      * @param collection the collection of Roblox games to sort
      * @return an ArrayList of Roblox games sorted by player count
      * @since 10-25-2026
      */
-    
     public ArrayList<RobloxGame> sortByPlayers(RobloxGameCollection collection) {
         //creates arraylist
         ArrayList<RobloxGame> games = new ArrayList<>();

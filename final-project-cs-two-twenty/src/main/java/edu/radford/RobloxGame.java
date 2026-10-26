@@ -79,6 +79,8 @@ public class RobloxGame implements Serializable{
      */
     public String getInfo(){
         return "Game Name: " + name +
+                "\nRoot Place ID:" + rootPlaceId +
+                "\nUniverse ID:" + id +
                 "\nGenre: " + genre +
                 "\nCurrent Player Count: " + playing +
                 "\nVisits: " + visits +
@@ -223,7 +225,7 @@ public class RobloxGame implements Serializable{
      * @param isContentRestricted represents whether or not a games' content is restricted
      * @since 10-25-2026
      */
-    public void setIsContentRestricted(){
+    public void setIsContentRestricted(Boolean isContentRestricted){
         this.isContentRestricted = isContentRestricted;
     }
 
@@ -264,7 +266,7 @@ public class RobloxGame implements Serializable{
      * @param rootPlaceId
      * @since 10-25-26
      */
-    public void setRootPlaceID(){
+    public void setRootPlaceID(long rootPlaceId){
         this.rootPlaceId = rootPlaceId;
     }
 

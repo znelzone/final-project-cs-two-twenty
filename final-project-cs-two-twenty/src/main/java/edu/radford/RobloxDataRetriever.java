@@ -36,12 +36,32 @@ public class RobloxDataRetriever{
      * @version 10-5-2026
      * @since 9-26-2026
      */
-    public RobloxDataRetriever() {
+    public RobloxDataRetriever() throws IOException, ClassNotFoundException{
     client = HttpClient.newHttpClient();
-    ourCollection = new RobloxGameCollection();
 
-    //to be removed later, once we automate the creation of games
-    initializeGamesTemp();
+    try {
+       ourCollection = RobloxGameCollection.load("robloxGames.dat");
+       
+       //if editing RobloxGame
+    //    ourCollection = new RobloxGameCollection();
+    //    initializeGamesTemp();
+       
+       updateGameData();
+
+       ourCollection.toString();
+       
+
+    } catch (Exception e) {
+        //for debugging purposes
+        e.printStackTrace();
+    }
+
+
+    //temporary saving of our collection until the final save is in the place that calls retreiver constructor
+    ourCollection.save("robloxGames.dat");
+
+
+    
     }
 
 
@@ -162,27 +182,32 @@ public class RobloxDataRetriever{
                 //converts API response from java string into JSON structure
                 JsonObject response = JsonParser.parseString(json).getAsJsonObject();
 
-                //get(0) means selecting the first game in the array
+                //get(0) means selecting the first game in the list
                 JsonObject gameData = response.getAsJsonArray("data").get(0).getAsJsonObject();
 
                 String name = gameData.get("name").getAsString();
                 int players = gameData.get("playing").getAsInt();
-
-                robloxGame.setName(name);
-                robloxGame.setPlaying(players);
-
                 long visits = gameData.get("visits").getAsLong();
                 int favorites = gameData.get("favoritedCount").getAsInt();
                 String genre = gameData.get("genre").getAsString();
+                long root = gameData.get("rootPlaceId").getAsLong();
+                Boolean contentRestriction = gameData.get("isContentRestricted").getAsBoolean();
 
+                robloxGame.setName(name);
+                robloxGame.setPlaying(players);
                 robloxGame.setVisits(visits);
                 robloxGame.setFavoritedCount(favorites);
                 robloxGame.setGenre(genre);
+                robloxGame.setRootPlaceID(root);
+                robloxGame.setIsContentRestricted(contentRestriction);
+
             }
             
         }
 
     }
+
+
     //lets RobloxGameCollection be read by other classes
     public RobloxGameCollection getCollection() {
         return ourCollection;

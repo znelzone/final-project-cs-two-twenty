@@ -61,11 +61,11 @@ public class Assignment3Driver{
         if(begin.equalsIgnoreCase("y") || begin.equalsIgnoreCase("yes")){
             System.out.println("Starting Search!");
             
-            //creates the roblox data retriever and creates a set of 10 temp games
+            
+            //creates a roblox games collection, loads a previously saved games collection into
+            //newly created games collection, and then updates said information.
             RobloxDataRetriever retriever = new RobloxDataRetriever();
             
-            retriever.loadGameData("robloxGames.dat");
-            System.out.println("Loaded saved game data!");
 
             //creates object that can sort games
             FileSort sorter = new FileSort();
