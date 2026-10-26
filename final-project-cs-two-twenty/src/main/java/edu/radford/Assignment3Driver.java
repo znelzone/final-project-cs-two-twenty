@@ -37,35 +37,56 @@ public class Assignment3Driver{
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Would you like to display some Roblox Game Data[Y/N]?");
-        String begin = scanner.nextLine();
+        String choice = scanner.nextLine();
 
-        if(begin.equalsIgnoreCase("y") || begin.equalsIgnoreCase("yes")){
-            System.out.println("Starting Search!");
+        if(choice.equalsIgnoreCase("y") || choice.equalsIgnoreCase("yes")){
+            System.out.println("updating data...");
             
             
             //creates a roblox games collection, loads a previously saved games collection into
             //newly created games collection, and then updates said information.
             RobloxDataRetriever retriever = new RobloxDataRetriever();
+            
+            System.out.println("Would you like a list in [1] ascending order () or [2] Decending order ()? \nType 1 or 2 for chosen option.");
+
+            int sortChoice = scanner.nextInt();
 
             //creates object that can sort games
             FileSort sorter = new FileSort();
 
-            ArrayList<RobloxGame> sortedGames = sorter.sortByPlayersHighestToLowest(retriever.getCollection());
+            ArrayList<RobloxGame> sortedGames = sorter.sortByPlayers(retriever.getCollection());
 
-            for (RobloxGame sortedGame : sortedGames) {
+            //options for how user wants their data sorted in ascending or descending order
+            switch (sortChoice) {
+                case 1:
+                //Ascending order
+
+                for (RobloxGame sortedGame : sortedGames) {
                 System.out.println(sortedGame.getInfo());
                 System.out.println("-------------------------------");
+                }
+
+                    break;
+            
+                case 2:
+                //Descending order
+
+                for (RobloxGame sortedGame : sortedGames.reversed()) {
+                System.out.println(sortedGame.getInfo());
+                System.out.println("-------------------------------");
+                }
+                   break;
             }
 
             System.out.println("Finished Search!");
-        } else if(begin.equalsIgnoreCase("n") || begin.equalsIgnoreCase("no")){
+        } else if(choice.equalsIgnoreCase("n") || choice.equalsIgnoreCase("no")){
             System.out.println("See you next time!");
             
         } else {
             System.out.println("Answer was neither [Y/N] couldn't search");
+
         }
 
-        
         scanner.close();
     }
 }

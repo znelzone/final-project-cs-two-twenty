@@ -121,7 +121,7 @@ public class FileSort {
      * @return an ArrayList of Roblox games sorted by player count
      * @since 10-25-2026
      */
-    public ArrayList<RobloxGame> sortByPlayersHighestToLowest(RobloxGameCollection collection) {
+    public ArrayList<RobloxGame> sortByPlayers(RobloxGameCollection collection) {
         //creates arraylist
         ArrayList<RobloxGame> games = new ArrayList<>();
 
