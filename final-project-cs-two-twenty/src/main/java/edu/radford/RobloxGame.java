@@ -29,8 +29,10 @@ public class RobloxGame implements Serializable{
     private int favoritedCount;
     //new data field to hold data from returned json file
     private Boolean isContentRestricted;
-    //the liked count by players
-    private int likes;
+    //the upvote count by players
+    private int upVotes;
+    //the downvote count by players
+    private int downVotes;
     //the max count of players in the games past
     private int maxPlaying; 
 
@@ -50,11 +52,12 @@ public class RobloxGame implements Serializable{
      * @param genre the genre of this Roblox game
      * @param visits the overall number of times users have visited this Roblox game
      * @param favoritedCount the favorited count of this Roblox game
-     * @param likes the count of likes for this Roblox game
+     * @param upVotes the  upVote count for this Roblox game
+     * @param downVotes the downVote count for this Roblox game
      * @param maxPlaying the sum of historical player counts for this Roblox game
      */
     public RobloxGame(String name, long rootPlaceId, long id, int playing, String genre, long visits, int favoritedCount,
-        int likes, int maxPlaying, Boolean isContentRestricted){
+        int upVotes, int downVotes, int maxPlaying, Boolean isContentRestricted){
         this.name = name;
         this.rootPlaceId = rootPlaceId;
         this.id = id;
@@ -62,7 +65,8 @@ public class RobloxGame implements Serializable{
         this.genre = genre;
         this.visits = visits;
         this.favoritedCount = favoritedCount;
-        this.likes = likes;
+        this.upVotes = upVotes;
+        this.downVotes = downVotes;
         this.maxPlaying = maxPlaying;
         this.isContentRestricted = isContentRestricted;
     
@@ -71,6 +75,18 @@ public class RobloxGame implements Serializable{
 
     //getters for robloxGame
     
+    /**
+     * Returns and int representation of the Down Vote count for
+     * this Roblox Game.
+     * 
+     * @return int representation of the Down Vote count
+     * @since 10-26-2026
+     */
+    public int getDownVotes(){
+        return downVotes;
+    }
+
+
     /**
      * Creates and returns a string represntation of this Roblox game.
      * 
@@ -85,7 +101,8 @@ public class RobloxGame implements Serializable{
                 "\nCurrent Player Count: " + playing +
                 "\nVisits: " + visits +
                 "\nFavorites: " + favoritedCount +
-                "\nLikes: " + likes;
+                "\nUpVotes: " + upVotes +
+                "\nDownVotes: " + downVotes;
                 //might need to add max player count ie the historical player counts
     }
 
@@ -174,14 +191,14 @@ public class RobloxGame implements Serializable{
     }
 
     /**
-     * Returns an integer representing the total number of likes this game
+     * Returns an integer representing the total number of upVotes this game
      * has received.
      * 
-     * @return int representation of total likes
+     * @return int representation of total upVotes
      * @since 9-26-2026
      */
-    public int getLikes(){
-        return likes;
+    public int getUpVotes(){
+        return upVotes;
     }
 
     /**
@@ -197,6 +214,17 @@ public class RobloxGame implements Serializable{
 
     
     //setters for RobloxGame
+
+    /**
+     * Sets the current count of Down Votes for this Roblox Game.
+     * 
+     * @param downVotes represents the count of downVotes from players for this game
+     * @since 10-26-2026
+     */
+    public void setDownVotes(int downVotes){
+        this.downVotes = downVotes;
+    }
+
 
     /**
      * Sets the current number of this games players when called.
@@ -273,13 +301,13 @@ public class RobloxGame implements Serializable{
 
 
     /**
-     * Sets the like count for this game when called.
+     * Sets the upVotes count for this game when called.
      * 
-     * @param likes represents the number of likes for this game
+     * @param upVotes represents the number of upVotes for this game
      * @since 9-26-2026S
      */
-    public void setLikes(int likes){
-        this.likes = likes;
+    public void setUpVotes(int upVotes){
+        this.upVotes = upVotes;
     }
 
     /**

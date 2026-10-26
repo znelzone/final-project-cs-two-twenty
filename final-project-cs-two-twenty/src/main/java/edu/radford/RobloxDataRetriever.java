@@ -23,7 +23,7 @@ public class RobloxDataRetriever{
 //will be creating RobloxGame objects
     private RobloxGameCollection ourCollection;
     private HttpClient client;
-    private String VOTES_URL = "https://games.roblox.com/v1/games/votes";
+    private String VOTES_URL = "https://games.roblox.com/v1/games/votes?universeIds=";
 
     /**
      * Constructs a RobloxDataRetriever, creating the HTTP client used
@@ -47,6 +47,7 @@ public class RobloxDataRetriever{
     //    initializeGamesTemp();
        
        updateGameData();
+       updateGameDataLikes();
 
        ourCollection.toString();
        
@@ -69,6 +70,7 @@ public class RobloxDataRetriever{
      * Creates a String representing a URL API request that concatinates
      * a universeID into the URL.
      * 
+     * @param long long representation of a universeId
      * @return String containing a URL concatination
      * @since 10-3-2026
      */
@@ -77,6 +79,20 @@ public class RobloxDataRetriever{
         id +
         "&fields=name%2C%20playing%2C%20visits%2C%20genre%2C%20favoritedCount";
     }
+
+    /**
+     * Creates a String representation of a URL API request that concatinates
+     * a universeID onto the end of the VOTES_URL constant.
+     * 
+     * 
+     * @param long long representation of a universeId
+     * @return String containing a URL concatination
+     * @since 10-26-2026
+     */
+    public String buildLikesRequestURL(long id){
+        return VOTES_URL + id;
+    }
+
 
 
     /**
@@ -88,34 +104,34 @@ public class RobloxDataRetriever{
      */
     public void initializeGamesTemp(){
         //rivals
-        RobloxGame rivals = new RobloxGame(null, 0, 6035872082L, 0, null, 0, 0, 0, 0, null);
+        RobloxGame rivals = new RobloxGame(null, 0, 6035872082L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(rivals);
         //sniperArena
-        RobloxGame sniperArena = new RobloxGame(null, 0, 9534705677L, 0, null, 0, 0, 0, 0, null);
+        RobloxGame sniperArena = new RobloxGame(null, 0, 9534705677L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(sniperArena);
         //driving Empire
-        RobloxGame drivingEmpire = new RobloxGame(null, 0, 1202096104L, 0, null, 0, 0, 0, 0, null);
+        RobloxGame drivingEmpire = new RobloxGame(null, 0, 1202096104L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(drivingEmpire);
         //doors
-        RobloxGame doors = new RobloxGame(null, 0, 2440500124L, 0, null, 0, 0, 0, 0, null);
+        RobloxGame doors = new RobloxGame(null, 0, 2440500124L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(doors);
         //howtotrainyourdragon
-        RobloxGame howToTrainYourDragon = new RobloxGame(null, 0, 7450497506L, 0, null, 0, 0, 0, 0, null);
+        RobloxGame howToTrainYourDragon = new RobloxGame(null, 0, 7450497506L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(howToTrainYourDragon);
         //superGolf
-        RobloxGame superGolf = new RobloxGame(null, 0, 1424449565L, 0, null, 0, 0, 0, 0, null);
+        RobloxGame superGolf = new RobloxGame(null, 0, 1424449565L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(superGolf);
         //workAtPizzaPlace
-        RobloxGame workAtPizzaPlace = new RobloxGame(null, 0, 47545L, 0, null, 0, 0, 0, 0, null);
+        RobloxGame workAtPizzaPlace = new RobloxGame(null, 0, 47545L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(workAtPizzaPlace);
         //ronopoly
-        RobloxGame ronopoly = new RobloxGame(null, 0, 2621511041L, 0, null, 0, 0, 0, 0, null);
+        RobloxGame ronopoly = new RobloxGame(null, 0, 2621511041L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(ronopoly);
         //isle
-        RobloxGame isle = new RobloxGame(null, 0, 1116949753L, 0, null, 0, 0, 0, 0, null);
+        RobloxGame isle = new RobloxGame(null, 0, 1116949753L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(isle);
         //buildABoatForTreasure
-        RobloxGame buildABoatForTreasure = new RobloxGame(null, 0, 210851291L, 0, null, 0, 0, 0, 0, null);
+        RobloxGame buildABoatForTreasure = new RobloxGame(null, 0, 210851291L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(buildABoatForTreasure);
     }
 
@@ -155,10 +171,8 @@ public class RobloxDataRetriever{
     /**
      * Retrieves updated data for each RobloxGame currently stored in
      * the collection. The universeID of each game is used to build an
-     * API request URL, and the resulting response is retreived.
-     * 
-     * Currently prints the JSON response data. This method will later
-     * use the data to update the attributes of each RobloxGame.
+     * API request URL, and the resulting response is retreived (excludes
+     * likes count in response).
      * 
      * @throws Exception 
      * @since 10-4-2026
@@ -206,6 +220,54 @@ public class RobloxDataRetriever{
         }
 
     }
+
+    /**
+     * Retrieves updated data for each RobloxGame currently stored in
+     * the collection. The universeID of each game is used to build an
+     * API request URL, and the resulting response is retreived (excludes
+     * likes count in response).
+     * 
+     * @throws Exception 
+     * @since 10-4-2026
+     */
+    public void updateGameDataLikes() throws Exception{
+        for(RobloxGame robloxGame : ourCollection){
+            
+            long universeID = robloxGame.getID();
+            String url = buildLikesRequestURL(universeID);
+            
+            
+            String json = getData(url);
+
+            if(json == null){
+                //if the response from the website didn't contain a 200
+                //status code ie didn't send anything back for the program
+                //to use
+                System.out.println("Cound not retrieve data for: " + VOTES_URL);
+            } else {
+                //if a response came back
+                System.out.println("UpVotes: ");
+                System.out.println(json + "\n");
+
+                //converts API response from java string into JSON structure
+                JsonObject response = JsonParser.parseString(json).getAsJsonObject();
+
+                //get(0) means selecting the first game in the list
+                JsonObject gameData = response.getAsJsonArray("data").get(0).getAsJsonObject();
+
+                int upVote = gameData.get("upVotes").getAsInt();
+                int downVote = gameData.get("downVotes").getAsInt();
+
+                robloxGame.setUpVotes(upVote);
+                robloxGame.setDownVotes(downVote);
+
+            }
+            
+        }
+
+    }
+
+
 
 
     //lets RobloxGameCollection be read by other classes
