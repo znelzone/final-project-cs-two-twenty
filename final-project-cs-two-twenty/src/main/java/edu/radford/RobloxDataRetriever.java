@@ -49,7 +49,8 @@ public class RobloxDataRetriever{
        updateGameData();
        updateGameDataLikes();
 
-       ourCollection.toString();
+       //for debugging
+    //    ourCollection.toString();
        
 
     } catch (Exception e) {
@@ -219,6 +220,7 @@ public class RobloxDataRetriever{
 
                 //should hopefully use the update maxPlaying method to update the historical max player count found
                 robloxGame.updateMaxPlaying(robloxGame.getMaxPlaying(), players);
+                // System.out.println(robloxGame.getMaxPlaying());
 
             }
             
@@ -282,29 +284,5 @@ public class RobloxDataRetriever{
         return ourCollection;
     }
 
-    /**
-     * Saves the currectn colleciton of Roblox games
-     * to the specified file
-     * 
-     * @param fileName the name of the file to save to
-     * @throws IOException if an error occurs while saving
-     * @since 10-25-2026
-     */
-    public void saveGameData(String fileName) throws IOException {
-        ourCollection.save(fileName);
-    }
-
-    /**
-     * Loads a previously saved collection of Roblox games
-     * from the specified file
-     * 
-     * @param fileName the name of the file to load
-     * @throws IOException if an error occurs while loading
-     * @throws ClassNotFoundException if the saved class cannot be found
-     * @since 10-25-2026
-     */
-    public void loadGameData(String fileName) throws IOException, ClassNotFoundException {
-        ourCollection = RobloxGameCollection.load(fileName);
-    }
 
 }

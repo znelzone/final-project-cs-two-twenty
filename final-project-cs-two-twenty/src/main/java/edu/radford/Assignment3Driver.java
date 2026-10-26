@@ -46,7 +46,6 @@ public class Assignment3Driver{
             //creates a roblox games collection, loads a previously saved games collection into
             //newly created games collection, and then updates said information.
             RobloxDataRetriever retriever = new RobloxDataRetriever();
-            
 
             //creates object that can sort games
             FileSort sorter = new FileSort();
