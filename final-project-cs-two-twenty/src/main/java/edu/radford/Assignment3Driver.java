@@ -33,25 +33,6 @@ public class Assignment3Driver{
  * @throws Exception if an error occurs while retrieving game data
  */
     public static void main(String[] args) throws Exception {
-        //gson json experiment
-        
-        String json = """
-            {
-
-            "name": "Rivals",
-            "playing": 12500
-        }
-        """;
-
-        Gson gson = new Gson();
-
-        RobloxGame game = gson.fromJson(json, RobloxGame.class);
-
-        System.out.println(game.getName());
-        System.out.println(game.getPlaying());
-
-        //gson json experiment --Zack
-        
         
         Scanner scanner = new Scanner(System.in);
 

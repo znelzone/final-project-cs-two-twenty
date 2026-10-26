@@ -103,7 +103,10 @@ public class RobloxGame implements Serializable{
                 "\nFavorites: " + favoritedCount +
                 "\nUpVotes: " + upVotes +
                 "\nDownVotes: " + downVotes;
-                //might need to add max player count ie the historical player counts
+
+
+                // "\nPast Top Player Count: " + maxPlaying;
+                //currently maxPlaying updateMethod doesn't seem to be working.
     }
 
     /**

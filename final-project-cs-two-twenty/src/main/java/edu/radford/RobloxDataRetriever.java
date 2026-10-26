@@ -190,8 +190,10 @@ public class RobloxDataRetriever{
                 System.out.println("Cound not retrieve data for: " + universeID);
             } else {
                 //if a response came back
-                System.out.println("Universe ID: " + universeID);
-                System.out.println(json + "\n");
+
+                //printing the json response
+                // System.out.println("Universe ID: " + universeID);
+                // System.out.println(json + "\n");
 
                 //converts API response from java string into JSON structure
                 JsonObject response = JsonParser.parseString(json).getAsJsonObject();
@@ -215,6 +217,9 @@ public class RobloxDataRetriever{
                 robloxGame.setRootPlaceID(root);
                 robloxGame.setIsContentRestricted(contentRestriction);
 
+                //should hopefully use the update maxPlaying method to update the historical max player count found
+                robloxGame.updateMaxPlaying(robloxGame.getMaxPlaying(), players);
+
             }
             
         }
@@ -222,13 +227,13 @@ public class RobloxDataRetriever{
     }
 
     /**
-     * Retrieves updated data for each RobloxGame currently stored in
-     * the collection. The universeID of each game is used to build an
-     * API request URL, and the resulting response is retreived (excludes
-     * likes count in response).
+     * Retrieves updated upvotes and downvotes data for each RobloxGame 
+     * currently stored in the collection. The universeID of each game 
+     * is used to build an API request URL, and the resulting response 
+     * is retreived.
      * 
      * @throws Exception 
-     * @since 10-4-2026
+     * @since 10-26-2026
      */
     public void updateGameDataLikes() throws Exception{
         for(RobloxGame robloxGame : ourCollection){
@@ -246,8 +251,10 @@ public class RobloxDataRetriever{
                 System.out.println("Cound not retrieve data for: " + VOTES_URL);
             } else {
                 //if a response came back
-                System.out.println("UpVotes: ");
-                System.out.println(json + "\n");
+                
+                //printing the json response
+                // System.out.println("UpVotes: ");
+                // System.out.println(json + "\n");
 
                 //converts API response from java string into JSON structure
                 JsonObject response = JsonParser.parseString(json).getAsJsonObject();
