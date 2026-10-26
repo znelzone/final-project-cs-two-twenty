@@ -9,7 +9,7 @@ import java.net.http.HttpResponse;
  * Sends HTTP requests to Roblox API endpoints
  * 
  * @author Zackary Nelson, Bradley Patton, Peyton Slusser, Ulises Royal
- * @version 10-24-2026
+ * @version 10-26-2026
  * @since 9-3-2026
  */
 public class RobloxDataRetriever{
@@ -49,9 +49,9 @@ public class RobloxDataRetriever{
      * @return String containing a URL concatination
      * @since 10-3-2026
      */
-    public String buildMainRequestURL(long universeID){
+    public String buildMainRequestURL(long id){
         return "https://games.roblox.com/v1/games?universeIds=" +
-        universeID +
+        id +
         "&fields=name%2C%20playing%2C%20visits%2C%20genre%2C%20favoritedCount";
     }
 
@@ -65,34 +65,34 @@ public class RobloxDataRetriever{
      */
     public void initializeGamesTemp(){
         //rivals
-        RobloxGame rivals = new RobloxGame(null, 6035872082L, 0, null, 0, 0, 0, 0);
+        RobloxGame rivals = new RobloxGame(null, 0, 6035872082L, 0, null, 0, 0, 0, 0, null);
         ourCollection.addGame(rivals);
         //sniperArena
-        RobloxGame sniperArena = new RobloxGame(null, 9534705677L, 0, null, 0, 0, 0, 0);
+        RobloxGame sniperArena = new RobloxGame(null, 0, 9534705677L, 0, null, 0, 0, 0, 0, null);
         ourCollection.addGame(sniperArena);
         //driving Empire
-        RobloxGame drivingEmpire = new RobloxGame(null, 1202096104L, 0, null, 0, 0, 0, 0);
+        RobloxGame drivingEmpire = new RobloxGame(null, 0, 1202096104L, 0, null, 0, 0, 0, 0, null);
         ourCollection.addGame(drivingEmpire);
         //doors
-        RobloxGame doors = new RobloxGame(null, 2440500124L, 0, null, 0, 0, 0, 0);
+        RobloxGame doors = new RobloxGame(null, 0, 2440500124L, 0, null, 0, 0, 0, 0, null);
         ourCollection.addGame(doors);
         //howtotrainyourdragon
-        RobloxGame howToTrainYourDragon = new RobloxGame(null, 7450497506L, 0, null, 0, 0, 0, 0);
+        RobloxGame howToTrainYourDragon = new RobloxGame(null, 0, 7450497506L, 0, null, 0, 0, 0, 0, null);
         ourCollection.addGame(howToTrainYourDragon);
         //superGolf
-        RobloxGame superGolf = new RobloxGame(null, 1424449565L, 0, null, 0, 0, 0, 0);
+        RobloxGame superGolf = new RobloxGame(null, 0, 1424449565L, 0, null, 0, 0, 0, 0, null);
         ourCollection.addGame(superGolf);
         //workAtPizzaPlace
-        RobloxGame workAtPizzaPlace = new RobloxGame(null, 47545L, 0, null, 0, 0, 0, 0);
+        RobloxGame workAtPizzaPlace = new RobloxGame(null, 0, 47545L, 0, null, 0, 0, 0, 0, null);
         ourCollection.addGame(workAtPizzaPlace);
         //ronopoly
-        RobloxGame ronopoly = new RobloxGame(null, 2621511041L, 0, null, 0, 0, 0, 0);
+        RobloxGame ronopoly = new RobloxGame(null, 0, 2621511041L, 0, null, 0, 0, 0, 0, null);
         ourCollection.addGame(ronopoly);
         //isle
-        RobloxGame isle = new RobloxGame(null, 1116949753L, 0, null, 0, 0, 0, 0);
+        RobloxGame isle = new RobloxGame(null, 0, 1116949753L, 0, null, 0, 0, 0, 0, null);
         ourCollection.addGame(isle);
         //buildABoatForTreasure
-        RobloxGame buildABoatForTreasure = new RobloxGame(null, 210851291L, 0, null, 0, 0, 0, 0);
+        RobloxGame buildABoatForTreasure = new RobloxGame(null, 0, 210851291L, 0, null, 0, 0, 0, 0, null);
         ourCollection.addGame(buildABoatForTreasure);
     }
 
@@ -142,7 +142,7 @@ public class RobloxDataRetriever{
      */
     public void updateGameData() throws Exception{
         for(RobloxGame robloxGame : ourCollection){
-            long universeID = robloxGame.getUniverseID();
+            long universeID = robloxGame.getID();
             String url = buildMainRequestURL(universeID);
             String json = getData(url);
 

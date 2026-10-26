@@ -6,45 +6,66 @@ import java.io.Serializable;
  * RobloxGame represents a game from the website Roblox.
  * 
  * @author Zackary Nelson, Bradley Patton, Peyton Slusser, and Ulises Royal
- * @version 10-24-2026
+ * @version 10-26-2026
  * @since 9-26-2026
  */
 public class RobloxGame implements Serializable{
 
     //RobloxGame attributes
 
-    private String gameName;
-    private long universeID;
-    private int currentPlayerCount;
-    private String genre;
+    //used to be univers id
+    private long id;
+    //new data field to hold data from returned json file    
+    private long rootPlaceId;
+    //used to be game name
+    private String name;
+    //used to be currentPlayerCount
+    private int playing;
+    //visit remained the same
     private long visits;
-    private int favorites;
+    //genre remained unchanged
+    private String genre;
+    //used to be favorites
+    private int favoritedCount;
+    //new data field to hold data from returned json file
+    private Boolean isContentRestricted;
+    //the liked count by players
     private int likes;
-    private int maxPlayerCount;
+    //the max count of players in the games past
+    private int maxPlaying; 
+
+
+
+    
 
 
     /**
      * Constructs the game with the specified information.
      * 
-     * @param gameName the name of this Roblox game
-     * @param universeID the universe ID of this Roblox game
-     * @param currentPlayerCount the concurent player count of this Roblox game
+     * @param rootPlaceId the root place id // NEW 
+     * @param isContentRestricted determines if content is or isn't restricted // NEW 
+     * @param name the name of this Roblox game
+     * @param id the universe ID of this Roblox game
+     * @param playing the concurent player count of this Roblox game
      * @param genre the genre of this Roblox game
      * @param visits the overall number of times users have visited this Roblox game
-     * @param favorites the favorites count of this Roblox game
+     * @param favoritedCount the favorited count of this Roblox game
      * @param likes the count of likes for this Roblox game
-     * @param maxPlayerCount the sum of historical player counts for this Roblox game
+     * @param maxPlaying the sum of historical player counts for this Roblox game
      */
-    public RobloxGame(String gameName, long universeID, int currentPlayerCount, String genre, long visits, int favorites,
-        int likes, int maxPlayerCount){
-        this.gameName = gameName;
-        this.universeID = universeID;
-        this.currentPlayerCount = currentPlayerCount;
+    public RobloxGame(String name, long rootPlaceId, long id, int playing, String genre, long visits, int favoritedCount,
+        int likes, int maxPlaying, Boolean isContentRestricted){
+        this.name = name;
+        this.rootPlaceId = rootPlaceId;
+        this.id = id;
+        this.playing = playing;
         this.genre = genre;
         this.visits = visits;
-        this.favorites = favorites;
+        this.favoritedCount = favoritedCount;
         this.likes = likes;
-        this.maxPlayerCount = maxPlayerCount;
+        this.maxPlaying = maxPlaying;
+        this.isContentRestricted = isContentRestricted;
+    
 
     }
 
@@ -57,15 +78,25 @@ public class RobloxGame implements Serializable{
      * @since 9-26-2026
      */
     public String getInfo(){
-        return "Game Name: " + gameName +
+        return "Game Name: " + name +
                 "\nGenre: " + genre +
-                "\nCurrent Player Count: " + currentPlayerCount +
+                "\nCurrent Player Count: " + playing +
                 "\nVisits: " + visits +
-                "\nFavorites: " + favorites +
+                "\nFavorites: " + favoritedCount +
                 "\nLikes: " + likes;
                 //might need to add max player count ie the historical player counts
     }
 
+    /**
+     * Returns a Boolean stating whether or not the content for this
+     * game is restricted or not.
+     * 
+     * @return a Boolean stating whether or not games' content is restricted
+     * @since 10-25-2026
+     */
+    public Boolean getISContentRestricted(){
+        return isContentRestricted;
+    }
 
     /**
      * Returns a string representation of this game.
@@ -73,18 +104,18 @@ public class RobloxGame implements Serializable{
      * @return the name of this game.
      * @since 9-26-2026
      */
-    public String getGameName(){
-        return gameName;
+    public String getName(){
+        return name;
     }
 
     /**
      * Returns a long that represents the UnivereseID of this game.
      * 
-     * @return a long representing the UniverseID of this game
+     * @return a long representing the Universe id of this game
      * @since 9-26-2026
      */
-    public long getUniverseID(){
-        return universeID;
+    public long getID(){
+        return id;
     }
 
     /**
@@ -93,9 +124,20 @@ public class RobloxGame implements Serializable{
      * @return an integer count of this games Concurrent Players
      * @since 9-26-2026
      */
-    public int getCurrentPlayerCount(){
-        return currentPlayerCount;
+    public int getPlaying(){
+        return playing;
     }
+
+    /**
+     * Returns a long count of this games root place id.
+     * 
+     * @return a long count of this games root place id
+     * @since 10-25-26
+     */
+    public long getRootPlaceID(){
+        return rootPlaceId;
+    }
+
 
     /**
      * Returns a String containing the genre of this game.
@@ -122,11 +164,11 @@ public class RobloxGame implements Serializable{
      * Returns a integer representing the total number of favorites this
      * game has received.
      * 
-     * @return int representation of total favoites
+     * @return int representation of total favorites
      * @since 9-26-2026
      */
-    public int getFavorites(){
-        return favorites;
+    public int getFavoritedCount(){
+        return favoritedCount;
     }
 
     /**
@@ -141,14 +183,14 @@ public class RobloxGame implements Serializable{
     }
 
     /**
-     * Returns an integer representing the historical total player count for
-     * this game
+     * Returns and integer representing the largest historical concurrent
+     * player count for this game.
      * 
-     * @return int representing historical sum of overall total player count
+     * @return int representing the largest historical largets concurrent player count
      * @since 9-26-2026
      */
-    public int getMaxPlayerCount(){
-        return maxPlayerCount;
+    public int getMaxPlaying(){
+        return maxPlaying;
     }
 
     
@@ -157,42 +199,53 @@ public class RobloxGame implements Serializable{
     /**
      * Sets the current number of this games players when called.
      * 
-     * @param currentPlayerCount represents the current number of players
+     * @param playing represents the current number of players
      * @since 9-26-2026
      */
-    public void setCurrentPlayerCount(int currentPlayerCount){
-        this.currentPlayerCount = currentPlayerCount;
+    public void setPlaying(int playing){
+        this.playing = playing;
     }
 
-    //set's favorites count when calle
+    
     /**
-     * Sets the number of this games favorites when called.
+     * Sets the number of this games favorited count when called.
      * 
-     * @param favorites represents the current number of favorites
+     * @param favoritedCount represents the current number of favorites from players
      * @since 9-26-2026
      */
-    public void setFavorites(int favorites){
-        this.favorites = favorites;
+    public void setFavoritedCount(int favoritedCount){
+        this.favoritedCount = favoritedCount;
     }
     
     /**
+     * Sets whether or not the games' content is restricted.
+     * 
+     * @param isContentRestricted represents whether or not a games' content is restricted
+     * @since 10-25-2026
+     */
+    public void setIsContentRestricted(){
+        this.isContentRestricted = isContentRestricted;
+    }
+
+
+    /**
      * Sets the name of this RobloxGame.
      * 
-     * @param gameName represents the name of this RobloxGame
+     * @param name represents the name of this RobloxGame
      * @since 9-26-2026
      */
-    public void setGameName(String gameName){
-        this.gameName = gameName;
+    public void setName(String name){
+        this.name = name;
     }
 
     /**
-     * Sets the universeID for this game.
+     * Sets the universe ID for this game.
      * 
-     * @param universeID represents the universeID for this game
+     * @param id represents the universe ID for this game
      * @since 9-26-2026
      */
-    public void setUniverseID(long universeID){
-        this.universeID = universeID;
+    public void setID(long id){
+        this.id = id;
     }
 
     /**
@@ -206,6 +259,18 @@ public class RobloxGame implements Serializable{
     }
 
     /**
+     * Sets the rootPlaceId for this game.
+     * 
+     * @param rootPlaceId
+     * @since 10-25-26
+     */
+    public void setRootPlaceID(){
+        this.rootPlaceId = rootPlaceId;
+    }
+
+
+
+    /**
      * Sets the like count for this game when called.
      * 
      * @param likes represents the number of likes for this game
@@ -216,18 +281,18 @@ public class RobloxGame implements Serializable{
     }
 
     /**
-     * Sets the historical maxPlayerCount to currentPlayerCount if
-     * CurrentPlayerCount is larger than maxPlayerCount
+     * Sets the historical maxPlaying to playing if
+     * playing is larger than maxPlaying
      * 
-     * @param maxPlayerCount represents the highest recorded player count
-     * @param currentPlayerCount represents the current recorded player count
+     * @param maxPlaying represents the highest recorded player count
+     * @param playing represents the current recorded player count
      * @since 9-26-2026
      */
-    public void updateMaxPlayerCount(int maxPlayerCount, int currentPlayerCount){
-        if(currentPlayerCount > maxPlayerCount){
-            this.maxPlayerCount = currentPlayerCount;
+    public void updateMaxPlaying(int maxPlaying, int playing){
+        if(playing > maxPlaying){
+            this.maxPlaying = playing;
         } 
-        this.maxPlayerCount = maxPlayerCount;
+        this.maxPlaying = maxPlaying;
     }
 
     /**

@@ -16,7 +16,7 @@ Adapted the Program of Study class (mainly the data structure) from our text boo
  * Driver class used to start the data capture/final project program.
  *
  * @author Zackary Nelson, Bradly Patton, Peyton Slusser, Ulises Royal
- * @version 10-24-2026
+ * @version 10-26-2026
  * @since 9-26-2026 
  */
 public class Assignment3Driver{
@@ -37,8 +37,8 @@ public class Assignment3Driver{
         String json = """
             {
 
-            "gameName": "Rivals",
-            "currentPlayerCount": 12500
+            "name": "Rivals",
+            "playing": 12500
         }
         """;
 
@@ -46,8 +46,8 @@ public class Assignment3Driver{
 
         RobloxGame game = gson.fromJson(json, RobloxGame.class);
 
-        System.out.println(game.getGameName());
-        System.out.println(game.getCurrentPlayerCount());
+        System.out.println(game.getName());
+        System.out.println(game.getPlaying());
 
         //gson json experiment --Zack
         

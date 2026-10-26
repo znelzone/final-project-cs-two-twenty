@@ -25,7 +25,7 @@ import java.util.List;
  * Represents a RobloxGameCollection, a list of games retreived from the Roblox
  * api catalog.
  * 
- * @version 9-3-2026
+ * @version 10-26-2026
  * @since 9-3-2026
  */
 public class RobloxGameCollection implements Iterable<RobloxGame>, Serializable{
@@ -51,16 +51,16 @@ public class RobloxGameCollection implements Iterable<RobloxGame>, Serializable{
     }
 
     /**
-     * Finds and returns the course matching the specified gameName and universeID
+     * Finds and returns the course matching the specified name of a robloxGame and universeID
      * 
-     * @param gameName
-     * @param UniverseID
+     * @param name
+     * @param id
      * @return the game, or null if not found
      */
-    public RobloxGame find(String gameName, long universeID){
+    public RobloxGame find(String name, long id){
         for(RobloxGame robloxGame: list){
-            if(gameName.equals(robloxGame.getGameName()) 
-                && universeID == robloxGame.getUniverseID()){
+            if(name.equals(robloxGame.getName()) 
+                && id == robloxGame.getID()){
                 return robloxGame;
             }
         }
