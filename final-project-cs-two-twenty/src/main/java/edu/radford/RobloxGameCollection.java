@@ -2,11 +2,11 @@
 Data Structure and Class adapted from
 Title: Java Software Structures
 Code Name: Program of Study
-Author: Josheph Chase, John Lewis
+Author: Joseph Chase, John Lewis
 Date: 2014
 Type: Source Code
-IEEE Citation: J. Lewis, J. Chase, and Piyali Sengupta, Java software structures : designing and using data structures. 
-                Harlow, Essex: Pearson Education Limited, pp. 133-134, 2014.
+IEEE Citation: [2] J. Lewis and J. Chase, Java software structures : Designing and using data structures, 4th ed.
+                United States of America: Pearson Education Limited, 2014, pp. 133-134.
  */
 
 package edu.radford;

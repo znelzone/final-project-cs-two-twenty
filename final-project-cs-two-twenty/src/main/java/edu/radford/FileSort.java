@@ -1,10 +1,17 @@
 package edu.radford;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.lang.Comparable;
 
-//QUICK SORT METHODS ADAPTED FROM JOE CHASE CODE!
-
+/*
+Quick Sort Sorting algorithm methods adapted from 
+Title: Java Software Structures
+Code Name: quickSort, partition
+Author: Joseph Chase, John Lewis
+Date: 2014
+Type: Source Code
+IEEE Citation: [3] J. Lewis and J. Chase, Java Software Structures: Designing and using data structures, 4th ed. 
+                    United States of America: Pearson Education Limited, 2014, pp.232-235.
+*/
 
 /**
  * FileSort contains methods for sorting Roblox games
@@ -54,7 +61,7 @@ public class FileSort {
      * @param data the array to be sorted
      * @param min the minimum index in the range to be sorted
      * @param max the maximum index in the range to be sorted
-     * @return
+     * @return int represenatation of the partition
      */
 
     private static <T extends Comparable<T>> int partition(ArrayList<T> data, int min, int max){
@@ -113,9 +120,8 @@ public class FileSort {
 
     /**
      * Sorts a collection of Roblox games by their current
-     * player count in descending order
-     * Creates a new ArrayList so that the oroginal collection
-     * doesn't change.
+     * player count in descending order Creates a new ArrayList 
+     * so that the original collection doesn't change.
      * 
      * @param collection the collection of Roblox games to sort
      * @return an ArrayList of Roblox games sorted by player count
@@ -132,14 +138,6 @@ public class FileSort {
 
         quickSort(games);
 
-        // games.sort(
-        //     //compares player counts
-        //     Comparator.comparingInt(
-        //         RobloxGame::getPlaying
-            
-        //     //highest to lowest by reversing
-        //     ).reversed()
-        // );
         //returns sorted list
         return games;
     }

@@ -1,6 +1,6 @@
 package edu.radford;
 import java.util.Scanner;
-import com.google.gson.Gson;
+// import com.google.gson.Gson;
 import java.util.ArrayList;
 
 /*
@@ -8,8 +8,20 @@ Sources:
 Roblox API Endpoints utilized in RobloxDataRetriever Class:
 [1] “games.roblox.com | Documentation - Roblox Creator Hub,” robloxdevrel, 2026. https://create.roblox.com/docs/en-us/cloud/reference/domains/games (accessed Sep. 26, 2026).
 
-Adapted the Program of Study class (mainly the data structure) from our text book in RobloxGameCollection class:
-[2] IEEE Citation: J. Lewis, J. Chase, and Piyali Sengupta, Java software structures : designing and using data structures. Harlow, Essex: Pearson Education Limited, pp. 133-134, 2014.
+Adapted the Program of Study class (mainly the data structure) from our text book in RobloxGameCollection.java class:
+[2] IEEE Citation: J. Lewis and J. Chase, Java software structures : Designing and using data structures, 4th ed. United States of America: Pearson Education Limited, 2014, pp. 133-134.
+
+Adapted the Quick Sort Algorithm featured on pages 233-235 in our FileSort.java class:
+[3] IEEE Citation: J. Lewis and J. Chase, Java Software Structures: Designing and using data structures, 4th ed. United States of America: Pearson Education Limited, 2014, pp.232-235.
+
+At first we didn't realize how easily we could utilize the jsonparser.parse() method to parse json objects returned from api endpoints, so we went through the effort of reformating
+a new java project utilizing maven and Google's Gson library. Upon finding out the jsonparser.parse() method was relitvely simple, with little to not additional effort to utilize
+however we did keep the google imports for json object and json parser. This is the conversation we had with ChatGPT on how to set up our project with the gson library available to us.
+[4] “Check out this chat,” ChatGPT, https://chatgpt.com/share/6adfd13e-b84c-83ea-a53e-46ea8b2ed50c (accessed Oct. 23, 2026). 
+
+Utilized this web article for a basic understanding of Java's jsonparser.parse() method's capabilities and basic systax structure for the updateGameData method in our
+RobloxDataRetriever.java class and the updateGameDataLikes method in the same class:
+[5] A. Obregon, “Java’s jsonparser.parse() method explained | medium,” Medium, https://medium.com/@AlexanderObregon/javas-jsonparser-parse-method-explained-76b126f6110e (accessed Oct. 12, 2026).
 
 */
 

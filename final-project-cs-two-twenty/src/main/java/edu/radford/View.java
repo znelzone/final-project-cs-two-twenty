@@ -5,8 +5,11 @@ import java.beans.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//work in progress class
+
+
 //version 10-26-2026
-//since oldern than 10-24
+//since older than 10-24
 
 public class View implements ActionListener, PropertyChangeListener
 {

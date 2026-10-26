@@ -36,16 +36,11 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
     //the max count of players in the games past
     private int maxPlaying; 
 
-
-
-    
-
-
     /**
      * Constructs the game with the specified information.
      * 
-     * @param rootPlaceId the root place id // NEW 
-     * @param isContentRestricted determines if content is or isn't restricted // NEW 
+     * @param rootPlaceId the root place id  
+     * @param isContentRestricted determines if content is or isn't restricted 
      * @param name the name of this Roblox game
      * @param id the universe ID of this Roblox game
      * @param playing the concurent player count of this Roblox game
@@ -103,7 +98,6 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
     public int getDownVotes(){
         return downVotes;
     }
-
 
     /**
      * Creates and returns a string represntation of this Roblox game.
@@ -315,8 +309,6 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
     public void setRootPlaceID(long rootPlaceId){
         this.rootPlaceId = rootPlaceId;
     }
-
-
 
     /**
      * Sets the upVotes count for this game when called.

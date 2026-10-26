@@ -169,6 +169,16 @@ public class RobloxDataRetriever{
     }
 
 
+    /*
+    Title: Java's JsonParser.parse() Method Explained
+    Author: Alexander Obregon
+    Date: Oct 13, 2024
+    Availability: https://medium.com/@AlexanderObregon/javas-jsonparser-parse-method-explained-76b126f6110e
+    IEEE Citation: [4] A. Obregon, “Java’s jsonparser.parse() method explained | medium,” Medium, 
+                    https://medium.com/@AlexanderObregon/javas-jsonparser-parse-method-explained-76b126f6110e (accessed Oct. 12, 2026). 
+
+    Note on Usage: Web Article for basic understanding of syntax and strucutre of method calls used within this method.
+    */
     /**
      * Retrieves updated data for each RobloxGame currently stored in
      * the collection. The universeID of each game is used to build an
@@ -228,6 +238,19 @@ public class RobloxDataRetriever{
 
     }
 
+    
+
+
+    /*
+    Title: Java's JsonParser.parse() Method Explained
+    Author: Alexander Obregon
+    Date: Oct 13, 2024
+    Availability: https://medium.com/@AlexanderObregon/javas-jsonparser-parse-method-explained-76b126f6110e
+    IEEE Citation: [4] A. Obregon, “Java’s jsonparser.parse() method explained | medium,” Medium, 
+                    https://medium.com/@AlexanderObregon/javas-jsonparser-parse-method-explained-76b126f6110e (accessed Oct. 12, 2026). 
+
+    Note on Usage: Web Article for basic understanding of syntax and strucutre of method calls used within this method.
+    */
     /**
      * Retrieves updated upvotes and downvotes data for each RobloxGame 
      * currently stored in the collection. The universeID of each game 
