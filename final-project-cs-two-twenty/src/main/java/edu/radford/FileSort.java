@@ -23,7 +23,7 @@ public class FileSort {
      * @since 10-25-2026
      */
     
-    public ArrayList<RobloxGame> sortByPlaters(RobloxGameCollection collection) {
+    public ArrayList<RobloxGame> sortByPlayers(RobloxGameCollection collection) {
         //creates arraylist
         ArrayList<RobloxGame> games = new ArrayList<>();
 
@@ -35,7 +35,7 @@ public class FileSort {
         games.sort(
             //compares player counts
             Comparator.comparingInt(
-                RobloxGame::getCurrentPlayerCount
+                RobloxGame::getPlaying
             
             //highest to lowest by reversing
             ).reversed()

@@ -168,15 +168,15 @@ public class RobloxDataRetriever{
                 String name = gameData.get("name").getAsString();
                 int players = gameData.get("playing").getAsInt();
 
-                robloxGame.setGameName(name);
-                robloxGame.setCurrentPlayerCount(players);
+                robloxGame.setName(name);
+                robloxGame.setPlaying(players);
 
                 long visits = gameData.get("visits").getAsLong();
                 int favorites = gameData.get("favoritedCount").getAsInt();
                 String genre = gameData.get("genre").getAsString();
 
                 robloxGame.setVisits(visits);
-                robloxGame.setFavorites(favorites);
+                robloxGame.setFavoritedCount(favorites);
                 robloxGame.setGenre(genre);
             }
             
