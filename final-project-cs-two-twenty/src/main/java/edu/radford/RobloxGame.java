@@ -1,6 +1,6 @@
 package edu.radford;
 import java.io.Serializable;
-
+import java.lang.Comparable;
 
 /**
  * RobloxGame represents a game from the website Roblox.
@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @version 10-26-2026
  * @since 9-26-2026
  */
-public class RobloxGame implements Serializable{
+public class RobloxGame implements Serializable, Comparable<RobloxGame>{
 
     //RobloxGame attributes
 
@@ -72,6 +72,34 @@ public class RobloxGame implements Serializable{
     
 
     }
+
+    /**
+     * Overwrites compareTo inorder to compare two roblox games;
+     * returns a positive int if first game is greater than the 
+     * other game, returns 0 if both games are equal, returns negative
+     * int if first game is less than other game.
+     * 
+     * 
+     * @param other the RobloxGame to compare a game to.
+     * @return int the integer representation of the comparison evaluation.
+     * @since 10-26-2026
+     */
+    @Override 
+    public int compareTo(RobloxGame other){
+        int nameResult = this.name.compareTo(other.name);
+        
+        //checks if the games names are equal, if they aren't
+        //return a negative or positive value
+        if (nameResult != 0){
+            return nameResult;
+        }       
+
+        //returns positive value if the first is greater than other(second)
+        //returns 0 if the first and other(second) are equal
+        //returns negative value if the first is less than other(second)
+        return Integer.compare(this.playing, other.playing);
+    }
+
 
     //getters for robloxGame
     
