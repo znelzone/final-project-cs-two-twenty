@@ -53,19 +53,18 @@ public class RobloxGameCollection implements Iterable<RobloxGame>, Serializable{
     /**
      * Finds and returns the course matching the specified name of a robloxGame and universeID
      * 
-     * @param name
-     * @param id
+     * @param name the name to be found
      * @return the game, or null if not found
      */
-    public RobloxGame find(String name, long id){
+    public RobloxGame findByName(String name){
         for(RobloxGame robloxGame: list){
-            if(name.equals(robloxGame.getName()) 
-                && id == robloxGame.getID()){
+            if(name.equals(robloxGame.getName())){
                 return robloxGame;
             }
         }
         return null;
     }
+
 
     /**
      * Adds the specified game after the target game. Does nothing if

@@ -86,17 +86,7 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
      */
     @Override 
     public int compareTo(RobloxGame other){
-        int nameResult = this.name.compareTo(other.name);
         
-        //checks if the games names are equal, if they aren't
-        //return a negative or positive value
-        if (nameResult != 0){
-            return nameResult;
-        }       
-
-        //returns positive value if the first is greater than other(second)
-        //returns 0 if the first and other(second) are equal
-        //returns negative value if the first is less than other(second)
         return Integer.compare(this.playing, other.playing);
     }
 
@@ -130,11 +120,8 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
                 "\nVisits: " + visits +
                 "\nFavorites: " + favoritedCount +
                 "\nUpVotes: " + upVotes +
-                "\nDownVotes: " + downVotes;
-
-
-                // "\nPast Top Player Count: " + maxPlaying;
-                //currently maxPlaying updateMethod doesn't seem to be working.
+                "\nDownVotes: " + downVotes +
+                "\nPast Top Player Count: " + maxPlaying;
     }
 
     /**
@@ -352,8 +339,9 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
     public void updateMaxPlaying(int maxPlaying, int playing){
         if(playing > maxPlaying){
             this.maxPlaying = playing;
-        } 
-        this.maxPlaying = maxPlaying;
+        } else {
+            this.maxPlaying = maxPlaying;
+        }
     }
 
     /**

@@ -50,7 +50,7 @@ public class Assignment3Driver{
             //creates object that can sort games
             FileSort sorter = new FileSort();
 
-            ArrayList<RobloxGame> sortedGames = sorter.sortByPlayers(retriever.getCollection());
+            ArrayList<RobloxGame> sortedGames = sorter.sortByPlayersHighestToLowest(retriever.getCollection());
 
             for (RobloxGame sortedGame : sortedGames) {
                 System.out.println(sortedGame.getInfo());
