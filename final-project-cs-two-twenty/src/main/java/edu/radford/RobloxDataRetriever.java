@@ -104,6 +104,10 @@ public class RobloxDataRetriever{
      * @since 9-30-2026
      */
     public void initializeGamesTemp(){
+
+        //the Hollow
+        RobloxGame hollow = new RobloxGame(null,0,10770728771L,0,null,0,0, 0, 0, 0, null);
+        ourCollection.addGame(hollow);
         //rivals
         RobloxGame rivals = new RobloxGame(null, 0, 6035872082L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(rivals);
