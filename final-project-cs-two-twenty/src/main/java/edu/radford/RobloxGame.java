@@ -6,7 +6,7 @@ import java.lang.Comparable;
  * RobloxGame represents a game from the website Roblox.
  * 
  * @author Zackary Nelson, Bradley Patton, Peyton Slusser, and Ulises Royal
- * @version 10-26-2026
+ * @version 10-27-2026
  * @since 9-26-2026
  */
 public class RobloxGame implements Serializable, Comparable<RobloxGame>{
@@ -322,7 +322,7 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
 
     /**
      * Sets the historical maxPlaying to playing if
-     * playing is larger than maxPlaying
+     * playing is larger than maxPlaying.
      * 
      * @param maxPlaying represents the highest recorded player count
      * @param playing represents the current recorded player count
@@ -337,7 +337,7 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
     }
 
     /**
-     * Sets the overall historical number of visits to this game
+     * Sets the overall historical number of visits to this game.
      * 
      * @param visits represents the overall number of visits to this game
      * @since 9-26-2026

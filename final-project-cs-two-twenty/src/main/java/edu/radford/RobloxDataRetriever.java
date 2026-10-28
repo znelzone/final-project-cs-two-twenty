@@ -12,7 +12,7 @@ import java.io.IOException;
  * Sends HTTP requests to Roblox API endpoints
  * 
  * @author Zackary Nelson, Bradley Patton, Peyton Slusser, Ulises Royal
- * @version 10-26-2026
+ * @version 10-27-2026
  * @since 9-3-2026
  */
 public class RobloxDataRetriever{
@@ -105,9 +105,20 @@ public class RobloxDataRetriever{
      */
     public void initializeGamesTemp(){
 
+        //Don't Splash
+        RobloxGame splash = new RobloxGame(null, 0, 10771421858L, 0, null, 0, 0, 0, 0, 0, null);
+        ourCollection.addGame(splash);
+        //Anime Adventures
+        RobloxGame animeAdventures = new RobloxGame(null, 0, 3183403065L, 0, null, 0, 0, 0, 0, 0, null);
+        ourCollection.addGame(animeAdventures);
         //the Hollow
         RobloxGame hollow = new RobloxGame(null,0,10770728771L,0,null,0,0, 0, 0, 0, null);
         ourCollection.addGame(hollow);
+        //A long flight
+        RobloxGame aLongFlight= new RobloxGame(null, 0, 10768785226L, 0, null, 0, 0, 0, 0, 0, null);
+        ourCollection.addGame(aLongFlight);
+
+
         //rivals
         RobloxGame rivals = new RobloxGame(null, 0, 6035872082L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(rivals);
