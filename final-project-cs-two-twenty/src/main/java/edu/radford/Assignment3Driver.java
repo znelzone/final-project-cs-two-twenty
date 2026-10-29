@@ -29,7 +29,7 @@ RobloxDataRetriever.java class and the updateGameDataLikes method in the same cl
  * Driver class used to start the data capture/final project program.
  *
  * @author Zackary Nelson, Bradly Patton, Peyton Slusser, Ulises Royal
- * @version 10-26-2026
+ * @version 10-27-2026
  * @since 9-26-2026 
  */
 public class Assignment3Driver{
@@ -52,15 +52,14 @@ public class Assignment3Driver{
         String choice = scanner.nextLine();
 
         if(choice.equalsIgnoreCase("y") || choice.equalsIgnoreCase("yes")){
+            
             System.out.println("updating data...");
-            
-            
             //creates a roblox games collection, loads a previously saved games collection into
             //newly created games collection, and then updates said information.
             RobloxDataRetriever retriever = new RobloxDataRetriever();
             
             System.out.println("Would you like a list in [1] ascending order () or [2] Decending order ()? \nType 1 or 2 for chosen option.");
-
+            
             int sortChoice = scanner.nextInt();
 
             //creates object that can sort games

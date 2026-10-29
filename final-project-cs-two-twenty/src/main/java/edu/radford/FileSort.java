@@ -18,7 +18,7 @@ IEEE Citation: [3] J. Lewis and J. Chase, Java Software Structures: Designing an
  * based on their statistics retrieved from the Roblox API
  * 
  * @author Peyton Slusser, Zack Nelson
- * @version 10-26-2026
+ * @version 10-27-2026
  * @since 10-25-2026
  */
 public class FileSort {

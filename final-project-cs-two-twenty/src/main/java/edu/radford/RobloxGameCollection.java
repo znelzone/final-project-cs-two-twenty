@@ -25,7 +25,7 @@ import java.util.List;
  * Represents a RobloxGameCollection, a list of games retreived from the Roblox
  * api catalog.
  * 
- * @version 10-26-2026
+ * @version 10-27-2026
  * @since 9-3-2026
  */
 public class RobloxGameCollection implements Iterable<RobloxGame>, Serializable{
