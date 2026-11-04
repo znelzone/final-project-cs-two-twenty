@@ -336,7 +336,7 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
     }
 
     /**
-     * Sets the overall historical number of visits to this game
+     * Sets the overall historical number of visits to this game.
      * 
      * @param visits represents the overall number of visits to this game
      * @since 9-26-2026

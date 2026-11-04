@@ -49,23 +49,17 @@ public class RobloxDataRetriever{
        updateGameData();
        updateGameDataLikes();
 
-       //for debugging
-    //    ourCollection.toString();
+    //for debugging
+    //ourCollection.toString();
        
-
     } catch (Exception e) {
         //for debugging purposes
         e.printStackTrace();
     }
 
-
     //temporary saving of our collection until we have a clear location for saving in our driver
-    ourCollection.save("robloxGames.dat");
-
-
-    
+    ourCollection.save("robloxGames.dat");    
     }
-
 
     /**
      * Creates a String representing a URL API request that concatinates
