@@ -1,0 +1,30 @@
+# Java compiled files
+*.class
+
+# Maven build output
+target/
+
+# Java serializable data
+*.dat
+
+# Log files
+*.log
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Visual Studio Code
+.vscode/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# Operating system files
+.DS_Store
+
+# Temporary files
+*.tmp
