@@ -39,6 +39,7 @@ public class RobloxGameCollection implements Iterable<RobloxGame>, Serializable{
         list = new LinkedList<RobloxGame>();
     }
 
+
     /**
      * Adds the specified Roblox game to the end of the Collection list.
      * 

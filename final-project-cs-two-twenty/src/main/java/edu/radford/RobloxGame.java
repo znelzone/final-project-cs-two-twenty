@@ -35,7 +35,7 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
     private int downVotes;
     //the max count of players in the games past
     private int maxPlaying; 
-
+    
     /**
      * Constructs the game with the specified information.
      * 
