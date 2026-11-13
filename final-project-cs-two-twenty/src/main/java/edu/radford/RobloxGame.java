@@ -37,7 +37,7 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
     private int maxPlaying; 
     
     /**
-     * Constructs the game with the specified information.
+     * Constructs a RobloxGame with the specified information.
      * 
      * @param rootPlaceId the root place id  
      * @param isContentRestricted determines if content is or isn't restricted 
