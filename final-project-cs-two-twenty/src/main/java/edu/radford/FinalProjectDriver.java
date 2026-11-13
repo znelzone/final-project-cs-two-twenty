@@ -1,7 +1,16 @@
 package edu.radford;
 import java.util.Scanner;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 // import com.google.gson.Gson;
 import java.util.ArrayList;
+
+//temp while I'm experimenting with recomended universe id's from the endpoints
+import java.net.http.HttpClient;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.io.IOException;
 
 /*
 Sources:
@@ -46,6 +55,30 @@ public class FinalProjectDriver{
  */
     public static void main(String[] args) throws Exception {
         
+        System.out.println("this is an experiment with getting a Json response");
+        System.out.println("from recomended universe ID's endpoint!\n===================");
+
+
+        //all the code that should supposedly get me a json object with a bunch of recomended universe id's
+        final HttpClient client = HttpClient.newHttpClient();
+
+        final String RECUNIDBASED = "https://apis.roblox.com/search-api/omni-search?searchQuery=DOORS&sessionId=12345&pageType=all";
+
+
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(RECUNIDBASED)).GET().build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        System.out.println(response.body());
+
+
+
+
+
+
+        
+
+
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Would you like to display some Roblox Game Data[Y/N]?");
