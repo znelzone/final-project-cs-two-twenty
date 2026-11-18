@@ -31,12 +31,16 @@ import java.util.List;
 public class RobloxGameCollection implements Iterable<RobloxGame>, Serializable{
     
     private List<RobloxGame> list;
+    private int numberOfGames;
 
     /**
      * Constructs an initially empty linkedlist of RobloxGames
      */
-    public RobloxGameCollection(){
+    public RobloxGameCollection(int numberOfGames){
+        
         list = new LinkedList<RobloxGame>();
+        //used to keep track of how many games are in the collection
+        this.numberOfGames = numberOfGames;
     }
 
 
@@ -50,7 +54,7 @@ public class RobloxGameCollection implements Iterable<RobloxGame>, Serializable{
             list.add(game);
         }
     }
-
+    
     /**
      * Finds and returns the course matching the specified name of a robloxGame and universeID
      * 
@@ -66,6 +70,36 @@ public class RobloxGameCollection implements Iterable<RobloxGame>, Serializable{
         return null;
     }
 
+    /**
+     * Increments the number of our current games held in the collection
+     * by 1.
+     * 
+     * @param oldNumber the pre-incremented number of games in the collection
+     * @since 11-18-2026
+     */
+    public void incrementNumberOfGames(int oldNumber){
+        this.numberOfGames = oldNumber + 1;
+    }
+
+    /**
+     * Returns the current number of RobloxGames in the RobloxGamesCollection.
+     * 
+     * @return int representation of the current number of robloxGames
+     * @since 11-18-2026
+     */
+    public int getNumberOfGames(){
+        return numberOfGames;
+    } 
+
+    /**
+     * Sets the current number of games added to the collection when called.
+     * 
+     * @param numberOfGames the int represenation of the number of games in the games collection
+     * @since 11-18-2026
+     */
+    public void setNumberOfGames(int numberOfGames){
+        this.numberOfGames = numberOfGames;
+    }
 
     /**
      * Adds the specified game after the target game. Does nothing if
