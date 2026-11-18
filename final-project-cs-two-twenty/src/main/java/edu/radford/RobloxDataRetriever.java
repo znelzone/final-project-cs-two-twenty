@@ -12,7 +12,7 @@ import java.io.IOException;
  * Sends HTTP requests to Roblox API endpoints
  * 
  * @author Zackary Nelson, Bradley Patton, Peyton Slusser, Ulises Royal
- * @version 10-27-2026
+ * @version 11-18-2026
  * @since 9-3-2026
  */
 public class RobloxDataRetriever{
@@ -46,8 +46,9 @@ public class RobloxDataRetriever{
     //    ourCollection = new RobloxGameCollection();
     //    initializeGamesTemp();
        
-       updateGameData();
-       updateGameDataLikes();
+        addRandomGames();
+        updateGameData();
+        updateGameDataLikes();
 
     //for debugging
     //ourCollection.toString();
@@ -60,6 +61,29 @@ public class RobloxDataRetriever{
     //temporary saving of our collection until we have a clear location for saving in our driver
     ourCollection.save("robloxGames.dat");    
     }
+
+
+    /**
+     * Utilizes prexisiting RobloxGames collection to add random roblox games
+     * to our collection by utilizing a Random Games Endpoint.
+     * 
+     * @since 11-18-2026
+     */
+    public void addRandomGames (){
+
+
+        //add a way to keep track of the number of games that have been added to ourCollection
+        //random number generator based on the number of games held in ourCollection
+        //use the random number to navigate our collection using an explicit iterator to find a specific universe name to then feed to our random universe url
+
+        //use existing functions that can take a random universe url to find games and add those to our collection
+
+    }
+
+
+
+
+
 
     /**
      * Creates a String representing a URL API request that concatinates
@@ -86,6 +110,23 @@ public class RobloxDataRetriever{
      */
     public String buildLikesRequestURL(long id){
         return VOTES_URL + id;
+    }
+
+
+    /**
+     * Creates a String representation of a URL API request, concatinating
+     * a prexisting Roblox Game name into the url, that retrieves a JSON 
+     * object representing random RobloxGames containing universeID's.
+     * 
+     * @param gameName a string representation of a pre-existing RobloxGame's name
+     * @return String containing a URL concatination
+     * @since 11-12-2026
+     */
+    public String buildRandUniverseRequestURL(String gameName){
+        return "https://apis.roblox.com/search-api/omni-search?searchQuery=" +
+                gameName +
+                "&sessionId=12345&pageType=all";
+
     }
 
 
@@ -144,7 +185,6 @@ public class RobloxDataRetriever{
         RobloxGame buildABoatForTreasure = new RobloxGame(null, 0, 210851291L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(buildABoatForTreasure);
     }
-
 
     /**
      * Sends a GET request to the specified URL and retreives the
