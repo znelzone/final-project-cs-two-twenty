@@ -1,8 +1,8 @@
 package edu.radford;
 import java.util.Scanner;
-import java.net.URI;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+// import java.net.URI;
+// import java.net.http.HttpRequest;
+// import java.net.http.HttpResponse;
 // import com.google.gson.Gson;
 import java.util.ArrayList;
 
@@ -60,7 +60,7 @@ public class FinalProjectDriver{
             //creates a roblox games collection, loads a previously saved games collection into
             //newly created games collection, and then updates said information.
             RobloxDataRetriever retriever = new RobloxDataRetriever();
-            
+
             System.out.println("Would you like a list in [1] ascending order () or [2] Decending order ()? \nType 1 or 2 for chosen option.");
             
             int sortChoice = scanner.nextInt();

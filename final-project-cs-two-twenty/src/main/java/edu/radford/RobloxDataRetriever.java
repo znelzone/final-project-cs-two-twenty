@@ -3,6 +3,8 @@ import java.net.http.HttpClient;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.IOException;
@@ -43,12 +45,16 @@ public class RobloxDataRetriever{
        ourCollection = RobloxGameCollection.load("robloxGames.dat");
        
        //if editing RobloxGame
-    //    ourCollection = new RobloxGameCollection();
+    //    ourCollection = new RobloxGameCollection(0);
     //    initializeGamesTemp();
        
         addRandomGames();
         updateGameData();
         updateGameDataLikes();
+
+        System.out.println("This is just Information I'm interested in seeing.");
+        System.out.println("Here's the Number of Games in the Collection:");
+        System.out.println(ourCollection.getNumberOfGames());
 
     //for debugging
     //ourCollection.toString();
@@ -70,19 +76,70 @@ public class RobloxDataRetriever{
      * @since 11-18-2026
      */
     public void addRandomGames (){
+        String randomGameName = findRandInCollection(randomIndexGenerator(ourCollection.getNumberOfGames()));
+        String URL = buildRandUniverseRequestURL(randomGameName);
+        String json = "";
 
+        try {
+            json = getData(URL);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
 
-        //add a way to keep track of the number of games that have been added to ourCollection
-        //random number generator based on the number of games held in ourCollection
-        //use the random number to navigate our collection using an explicit iterator to find a specific universe name to then feed to our random universe url
-
+        JsonObject responseJsonObject = JsonParser.parseString(json).getAsJsonObject();
         //use existing functions that can take a random universe url to find games and add those to our collection
+        JsonArray searchResults = responseJsonObject.getAsJsonArray("searchResults");
+        
+        for(int i = 0; i < searchResults.size(); i++){
 
+            JsonObject currentResult = searchResults.get(i).getAsJsonObject();
+
+            JsonArray contents = currentResult.getAsJsonArray("contents");
+
+            for( int j = 0; j < contents.size(); j++){
+                JsonObject gameData = contents.get(j).getAsJsonObject();
+
+                long universeID = gameData.get("universeId").getAsLong();
+
+                if(!ourCollection.gameExists(universeID)){
+                    RobloxGame robloxGame = new RobloxGame(null, 0, universeID, 0, null, 0, 0, 0, 0, 0, null);
+                    ourCollection.addGame(robloxGame);
+                }
+            }
+        }
+    }
+
+    /**
+     * Generates a random number between 0 to the total number
+     * of games held in ourCollection.
+     * 
+     * @return int number representing the location of a random game in ourCollection
+     * @since 11-18-2026
+     */
+    private int randomIndexGenerator(int numberOfGames){
+        int randomIndex = (int)(Math.random() * numberOfGames);
+        return randomIndex;
     }
 
 
-
-
+    /**
+     * Private helpermethod for addRandomGames. Finds a random game in
+     * ourCollection.
+     * 
+     * @return String representation of the name of a random game in ourCollection
+     * @since 11-18-2026
+     */
+    private String findRandInCollection(int randomIndex){
+        int currentNum = 0;
+        for(RobloxGame RobloxGame : ourCollection){
+            if(currentNum == randomIndex){
+             return RobloxGame.getName();
+            }
+            currentNum++;
+        }
+        return null;
+    }
 
 
     /**
@@ -112,7 +169,7 @@ public class RobloxDataRetriever{
         return VOTES_URL + id;
     }
 
-
+    //existed since 11-12 just not in this location
     /**
      * Creates a String representation of a URL API request, concatinating
      * a prexisting Roblox Game name into the url, that retrieves a JSON 
@@ -126,7 +183,6 @@ public class RobloxDataRetriever{
         return "https://apis.roblox.com/search-api/omni-search?searchQuery=" +
                 gameName +
                 "&sessionId=12345&pageType=all";
-
     }
 
 
@@ -143,47 +199,74 @@ public class RobloxDataRetriever{
         //Don't Splash
         RobloxGame splash = new RobloxGame(null, 0, 10771421858L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(splash);
+        //updatesOurCollection's num of games added to the collection
+        ourCollection.incrementNumberOfGames(ourCollection.getNumberOfGames());
         //Anime Adventures
         RobloxGame animeAdventures = new RobloxGame(null, 0, 3183403065L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(animeAdventures);
+        //updatesOurCollection's num of games added to the collection
+        ourCollection.incrementNumberOfGames(ourCollection.getNumberOfGames());        
         //the Hollow
         RobloxGame hollow = new RobloxGame(null,0,10770728771L,0,null,0,0, 0, 0, 0, null);
         ourCollection.addGame(hollow);
+        //updatesOurCollection's num of games added to the collection
+        ourCollection.incrementNumberOfGames(ourCollection.getNumberOfGames());
         //A long flight
         RobloxGame aLongFlight= new RobloxGame(null, 0, 10768785226L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(aLongFlight);
-
+        //updatesOurCollection's num of games added to the collection
+        ourCollection.incrementNumberOfGames(ourCollection.getNumberOfGames());
 
         //rivals
         RobloxGame rivals = new RobloxGame(null, 0, 6035872082L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(rivals);
+        //updatesOurCollection's num of games added to the collection
+        ourCollection.incrementNumberOfGames(ourCollection.getNumberOfGames());
         //sniperArena
         RobloxGame sniperArena = new RobloxGame(null, 0, 9534705677L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(sniperArena);
+        //updatesOurCollection's num of games added to the collection
+        ourCollection.incrementNumberOfGames(ourCollection.getNumberOfGames());        
         //driving Empire
         RobloxGame drivingEmpire = new RobloxGame(null, 0, 1202096104L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(drivingEmpire);
+        //updatesOurCollection's num of games added to the collection
+        ourCollection.incrementNumberOfGames(ourCollection.getNumberOfGames());        
         //doors
         RobloxGame doors = new RobloxGame(null, 0, 2440500124L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(doors);
+        //updatesOurCollection's num of games added to the collection
+        ourCollection.incrementNumberOfGames(ourCollection.getNumberOfGames());        
         //howtotrainyourdragon
         RobloxGame howToTrainYourDragon = new RobloxGame(null, 0, 7450497506L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(howToTrainYourDragon);
+        //updatesOurCollection's num of games added to the collection
+        ourCollection.incrementNumberOfGames(ourCollection.getNumberOfGames());        
         //superGolf
         RobloxGame superGolf = new RobloxGame(null, 0, 1424449565L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(superGolf);
+        //updatesOurCollection's num of games added to the collection
+        ourCollection.incrementNumberOfGames(ourCollection.getNumberOfGames());        
         //workAtPizzaPlace
         RobloxGame workAtPizzaPlace = new RobloxGame(null, 0, 47545L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(workAtPizzaPlace);
+        //updatesOurCollection's num of games added to the collection
+        ourCollection.incrementNumberOfGames(ourCollection.getNumberOfGames());        
         //ronopoly
         RobloxGame ronopoly = new RobloxGame(null, 0, 2621511041L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(ronopoly);
+        //updatesOurCollection's num of games added to the collection
+        ourCollection.incrementNumberOfGames(ourCollection.getNumberOfGames());        
         //isle
         RobloxGame isle = new RobloxGame(null, 0, 1116949753L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(isle);
+        //updatesOurCollection's num of games added to the collection
+        ourCollection.incrementNumberOfGames(ourCollection.getNumberOfGames());        
         //buildABoatForTreasure
         RobloxGame buildABoatForTreasure = new RobloxGame(null, 0, 210851291L, 0, null, 0, 0, 0, 0, 0, null);
         ourCollection.addGame(buildABoatForTreasure);
+        //updatesOurCollection's num of games added to the collection
+        ourCollection.incrementNumberOfGames(ourCollection.getNumberOfGames());        
     }
 
     /**
