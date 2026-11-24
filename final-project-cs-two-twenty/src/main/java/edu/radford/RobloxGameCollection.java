@@ -33,6 +33,7 @@ public class RobloxGameCollection implements Iterable<RobloxGame>, Serializable{
     
     private List<RobloxGame> list;
     private int numberOfGames;
+    private static final long serialVersionUID = 980L;
 
     /**
      * Constructs an initially empty linkedlist of RobloxGames
@@ -51,10 +52,7 @@ public class RobloxGameCollection implements Iterable<RobloxGame>, Serializable{
      * @param game the game to be added
      */
     public void addGame(RobloxGame game){
-        if(game != null){
-            incrementNumberOfGames(numberOfGames);
-            list.add(game);
-        }
+        list.add(game);
     }
     
 
@@ -76,11 +74,12 @@ public class RobloxGameCollection implements Iterable<RobloxGame>, Serializable{
     }
 
     /**
-     * Searchest through list comparing a given universe id to the universe
+     * Searches through list comparing a given universe id to the universe
      * id's within each object being compared too.
      * 
      * @param id the Long representation of a universe id to be compared
      * @return true if a game matching the id exists, false else
+     * @since 11-18-2026
      */
     public boolean gameExists(Long id){
         for(RobloxGame robloxGame: list){
@@ -90,6 +89,22 @@ public class RobloxGameCollection implements Iterable<RobloxGame>, Serializable{
         }
         return false;
     }
+
+    /**
+     * Takes a games name as a string and exaluates wether the name is
+     * null or not.
+     * 
+     * @param name String representation of the game objects name
+     * @return true if name is not null
+     * @since 11-24-2026
+     */
+    public Boolean hasValidName(String name){
+        if(name == null){
+            return false;
+        }
+        return true;
+    }
+
 
 
     /**
@@ -125,7 +140,7 @@ public class RobloxGameCollection implements Iterable<RobloxGame>, Serializable{
      * @since 11-18-2026
      */
     public int getNumberOfGames(){
-        return numberOfGames;
+        return list.size();
     } 
 
     /**

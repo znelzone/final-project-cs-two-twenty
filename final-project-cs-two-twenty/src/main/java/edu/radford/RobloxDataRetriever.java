@@ -3,10 +3,15 @@ import java.net.http.HttpClient;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonElement;
+import java.util.ArrayList;
+import java.util.List;
 import java.io.IOException;
 
 /**
@@ -77,37 +82,61 @@ public class RobloxDataRetriever{
      */
     public void addRandomGames (){
         String randomGameName = findRandInCollection(randomIndexGenerator(ourCollection.getNumberOfGames()));
-        String URL = buildRandUniverseRequestURL(randomGameName);
-        String json = "";
+        
+        if (randomGameName == null){
+            return; //no name to search with; return nothing
+        }
+
+        System.out.println("Random search term:" + randomGameName);
+
+        String json;
 
         try {
-            json = getData(URL);
+            json = getData(buildRandUniverseRequestURL(randomGameName));
         } catch (Exception e) {
             e.printStackTrace();
+            return;
+        }
+
+        System.out.println("Response null?" + (json == null));
+
+        if(json == null){
+            System.out.println("Random Game Search Failed for" + randomGameName);
             return;
         }
 
         JsonObject responseJsonObject = JsonParser.parseString(json).getAsJsonObject();
         //use existing functions that can take a random universe url to find games and add those to our collection
         JsonArray searchResults = responseJsonObject.getAsJsonArray("searchResults");
+        if (searchResults == null){
+            return;
+        }
         
+        int added = 0;
+
         for(int i = 0; i < searchResults.size(); i++){
 
-            JsonObject currentResult = searchResults.get(i).getAsJsonObject();
-
-            JsonArray contents = currentResult.getAsJsonArray("contents");
+            JsonArray contents = searchResults.get(i).getAsJsonObject().getAsJsonArray("contents");
+            if (contents == null){continue;}
 
             for( int j = 0; j < contents.size(); j++){
                 JsonObject gameData = contents.get(j).getAsJsonObject();
 
-                long universeID = gameData.get("universeId").getAsLong();
+                if (!gameData.has("universeId") || !gameData.has("name")){continue;}
 
-                if(!ourCollection.gameExists(universeID)){
-                    RobloxGame robloxGame = new RobloxGame(null, 0, universeID, 0, null, 0, 0, 0, 0, 0, null);
+                long universeID = gameData.get("universeId").getAsLong();
+                String gameName = gameData.get("name").getAsString();
+
+                //when a game does not already exist in our collection and has a valid name we will add the game
+                if(!ourCollection.gameExists(universeID) && ourCollection.hasValidName(gameName)){
+                    RobloxGame robloxGame = new RobloxGame(gameName, 0, universeID, 0, null, 0, 0, 0, 0, 0, null);
                     ourCollection.addGame(robloxGame);
+                    added ++;
                 }
             }
         }
+
+        System.out.println("Added " + added + " new games");
     }
 
     /**
@@ -181,7 +210,7 @@ public class RobloxDataRetriever{
      */
     public String buildRandUniverseRequestURL(String gameName){
         return "https://apis.roblox.com/search-api/omni-search?searchQuery=" +
-                gameName +
+                URLEncoder.encode(gameName, StandardCharsets.UTF_8) +
                 "&sessionId=12345&pageType=all";
     }
 
@@ -297,6 +326,9 @@ public class RobloxDataRetriever{
         //if there was no response from the endpoint
         //ie anything other than the 200 status code
         //return null
+
+        System.out.println("Roblox returned status " + response.statusCode());
+
         return null;
     }
 
@@ -321,50 +353,57 @@ public class RobloxDataRetriever{
      * @since 10-4-2026
      */
     public void updateGameData() throws Exception{
-        for(RobloxGame robloxGame : ourCollection){
-            long universeID = robloxGame.getID();
-            String url = buildMainRequestURL(universeID);
-            String json = getData(url);
-
-            if(json == null){
-                //if the response from the website didn't contain a 200
-                //status code ie didn't send anything back for the program
-                //to use
-                System.out.println("Cound not retrieve data for: " + universeID);
-            } else {
-                //if a response came back
-
-                //printing the json response
-                // System.out.println("Universe ID: " + universeID);
-                // System.out.println(json + "\n");
-
-                //converts API response from java string into JSON structure
-                JsonObject response = JsonParser.parseString(json).getAsJsonObject();
-
-                //get(0) means selecting the first game in the list
-                JsonObject gameData = response.getAsJsonArray("data").get(0).getAsJsonObject();
-
-                String name = gameData.get("name").getAsString();
-                int players = gameData.get("playing").getAsInt();
-                long visits = gameData.get("visits").getAsLong();
-                int favorites = gameData.get("favoritedCount").getAsInt();
-                String genre = gameData.get("genre").getAsString();
-                long root = gameData.get("rootPlaceId").getAsLong();
-                Boolean contentRestriction = gameData.get("isContentRestricted").getAsBoolean();
-
-                robloxGame.setName(name);
-                robloxGame.setPlaying(players);
-                robloxGame.setVisits(visits);
-                robloxGame.setFavoritedCount(favorites);
-                robloxGame.setGenre(genre);
-                robloxGame.setRootPlaceID(root);
-                robloxGame.setIsContentRestricted(contentRestriction);
-
-                //should hopefully use the update maxPlaying method to update the historical max player count found
-                robloxGame.updateMaxPlaying(robloxGame.getMaxPlaying(), players);
-                // System.out.println(robloxGame.getMaxPlaying());
-            }   
+        
+        ArrayList<RobloxGame> gameList = new ArrayList<RobloxGame>();
+        for (RobloxGame robloxGame : ourCollection){
+            gameList.add(robloxGame);
         }
+
+        for (int start = 0; start < gameList.size(); start += 50){
+            List<RobloxGame> gameSubList = gameList.subList(start, Math.min(start + 50, gameList.size()));
+
+            StringBuilder ids = new StringBuilder();
+
+            for (RobloxGame robloxGame : gameSubList){
+                if (ids.length() > 0) ids.append(",");
+                ids.append(robloxGame.getID());
+            }
+
+            String json = getData("https://games.roblox.com/v1/games?universeIds=" + ids);
+
+            if (json == null){
+                System.out.println("Could not retrieve a Sublist starting at index" + start);
+                continue;
+            }
+        
+            JsonArray parsingData = JsonParser.parseString(json).getAsJsonObject().getAsJsonArray("data");
+
+            for (JsonElement element : parsingData){
+                JsonObject gameData = element.getAsJsonObject();
+                long id = gameData.get("id").getAsLong();
+
+                for(RobloxGame robloxGame : gameSubList){
+                    if(robloxGame.getID() == id){
+                        robloxGame.setName(gameData.get("name").getAsString());
+                        robloxGame.setPlaying(gameData.get("playing").getAsInt());
+                        robloxGame.setVisits(gameData.get("visits").getAsLong());
+                        robloxGame.setFavoritedCount(gameData.get("favoritedCount").getAsInt());
+                        robloxGame.setGenre(gameData.get("genre").getAsString());
+                        robloxGame.setRootPlaceID(gameData.get("rootPlaceId").getAsLong());
+                        robloxGame.setIsContentRestricted(gameData.get("isContentRestricted").getAsBoolean());
+                        robloxGame.updateMaxPlaying(robloxGame.getMaxPlaying(), robloxGame.getPlaying());
+                        break;
+                    }
+
+                }
+            }
+
+        }
+
+
+
+
+
     }
 
     /*

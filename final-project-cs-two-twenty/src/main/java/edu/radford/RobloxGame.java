@@ -35,6 +35,10 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
     private int downVotes;
     //the max count of players in the games past
     private int maxPlaying; 
+
+    //explicitly declared serilization ID declared to avoid InvalidClassException
+    //when making modifications to this class.
+    private static final Long serialVersionUID = 8675309L;
     
     /**
      * Constructs a RobloxGame with the specified information.
@@ -50,6 +54,7 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
      * @param upVotes the  upVote count for this Roblox game
      * @param downVotes the downVote count for this Roblox game
      * @param maxPlaying the sum of historical player counts for this Roblox game
+     * @param serialVersionUID the Long representation of this objects serialVersionUID
      */
     public RobloxGame(String name, long rootPlaceId, long id, int playing, String genre, long visits, int favoritedCount,
         int upVotes, int downVotes, int maxPlaying, Boolean isContentRestricted){
@@ -64,8 +69,6 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
         this.downVotes = downVotes;
         this.maxPlaying = maxPlaying;
         this.isContentRestricted = isContentRestricted;
-    
-
     }
 
     /**
