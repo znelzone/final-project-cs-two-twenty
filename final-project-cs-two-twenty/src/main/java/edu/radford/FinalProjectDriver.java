@@ -103,7 +103,7 @@ public class FinalProjectDriver{
                 System.out.println("-------------------------------");
                 }                    
                 } else if (otherDisplayChoice == 2){
-                      for (RobloxGame sortedGame : sortedGames) {
+                      for (RobloxGame sortedGame : sortedGames.reversed()) {
                 System.out.println(sortedGame.getLimitedInfo());
                 System.out.println("-------------------------------");
                 }
