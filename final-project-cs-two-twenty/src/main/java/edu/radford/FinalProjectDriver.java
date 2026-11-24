@@ -75,9 +75,19 @@ public class FinalProjectDriver{
                 case 1:
                 //Ascending order
 
-                for (RobloxGame sortedGame : sortedGames) {
+                System.out.println("[1] Display all data for each game or [2] Display only UID, Name, and Player Count:");
+                int displayChoice = scanner.nextInt();
+
+                if(displayChoice == 1){
+                    for (RobloxGame sortedGame : sortedGames) {
                 System.out.println(sortedGame.getInfo());
                 System.out.println("-------------------------------");
+                }       
+                } else {
+                    for (RobloxGame sortedGame : sortedGames) {
+                System.out.println(sortedGame.getLimitedInfo());
+                System.out.println("-------------------------------");
+                }
                 }
 
                     break;
@@ -85,10 +95,21 @@ public class FinalProjectDriver{
                 case 2:
                 //Descending order
 
-                for (RobloxGame sortedGame : sortedGames.reversed()) {
+                System.out.println("[1] Display all data for each game or [2] Display only UID, Name, and Player Count:");
+                int otherDisplayChoice = scanner.nextInt();
+                if(otherDisplayChoice == 1){
+                    for (RobloxGame sortedGame : sortedGames.reversed()) {
                 System.out.println(sortedGame.getInfo());
                 System.out.println("-------------------------------");
+                }                    
+                } else if (otherDisplayChoice == 2){
+                      for (RobloxGame sortedGame : sortedGames) {
+                System.out.println(sortedGame.getLimitedInfo());
+                System.out.println("-------------------------------");
                 }
+                }
+
+
                    break;
             }
 

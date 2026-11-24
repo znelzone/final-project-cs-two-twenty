@@ -38,7 +38,7 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
 
     //explicitly declared serilization ID declared to avoid InvalidClassException
     //when making modifications to this class.
-    private static final Long serialVersionUID = 8675309L;
+    private static final long serialVersionUID = 8675309L;
     
     /**
      * Constructs a RobloxGame with the specified information.
@@ -119,6 +119,18 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
                 "\nDownVotes: " + downVotes +
                 "\nPast Top Player Count: " + maxPlaying;
     }
+
+    /**
+     * Creates and Returns a string representation of this roblox game with limited
+     * information (Universe Id, Game Name, Current Player Count).
+     * 
+     * @return A string representation of this roblox game
+     * @since 11-24-2026
+     */
+    public String getLimitedInfo(){
+        return "Game Name: " + name + " Universe ID: " + id + " Player Count: " + playing;
+    }
+
 
     /**
      * Returns a Boolean stating whether or not the content for this
