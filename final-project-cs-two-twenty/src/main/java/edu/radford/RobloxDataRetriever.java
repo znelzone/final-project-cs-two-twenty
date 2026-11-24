@@ -50,6 +50,11 @@ public class RobloxDataRetriever{
        ourCollection = RobloxGameCollection.load("robloxGames.dat");
        
        //if editing RobloxGame
+        if(ourCollection == null){
+            ourCollection = new RobloxGameCollection(0);
+            initializeGamesTemp();
+        }
+
     //    ourCollection = new RobloxGameCollection(0);
     //    initializeGamesTemp();
        
@@ -65,7 +70,6 @@ public class RobloxDataRetriever{
     //ourCollection.toString();
        
     } catch (Exception e) {
-        //for debugging purposes
         e.printStackTrace();
     }
 
