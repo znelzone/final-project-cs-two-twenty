@@ -62,7 +62,6 @@ public class RobloxDataRetriever{
         updateGameData();
         updateGameDataLikes();
 
-        System.out.println("This is just Information I'm interested in seeing.");
         System.out.println("Here's the Number of Games in the Collection:");
         System.out.println(ourCollection.getNumberOfGames());
 
@@ -324,9 +323,14 @@ public class RobloxDataRetriever{
         );
 
         if(response.statusCode() == 200){
+            //200 is a known status code for request recieved and answered, we don't need to print this code to command line
             return response.body();
+        } else if (response.statusCode() == 429){ // 429 is known to us, and is reletively important for debugging therefor we need to print when debugging
+            System.out.println(
+                "Roblox returned known status code 429 (rate limit reached) TOO MANY REQUESTS!"
+            );
+            return null;
         }
-
         //if there was no response from the endpoint
         //ie anything other than the 200 status code
         //return null

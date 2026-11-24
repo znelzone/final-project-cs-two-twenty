@@ -105,8 +105,6 @@ public class RobloxGameCollection implements Iterable<RobloxGame>, Serializable{
         return true;
     }
 
-
-
     /**
      * Finds and returns the course matching the specified name of a robloxGame and universeID
      * 
