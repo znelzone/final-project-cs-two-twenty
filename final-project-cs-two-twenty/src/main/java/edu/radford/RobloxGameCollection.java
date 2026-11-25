@@ -32,7 +32,10 @@ import java.util.List;
 public class RobloxGameCollection implements Iterable<RobloxGame>, Serializable{
     
     private List<RobloxGame> list;
+
+    @SuppressWarnings ("unused") //updated by setNumberOfGames method, used elsewhere in other classes
     private int numberOfGames;
+
     private static final long serialVersionUID = 980L;
 
     /**
