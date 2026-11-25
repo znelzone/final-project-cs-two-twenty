@@ -32,7 +32,7 @@ RobloxDataRetriever.java class and the updateGameDataLikes method in the same cl
  * Driver class used to start the data capture/final project program.
  *
  * @author Zackary Nelson, Bradly Patton, Peyton Slusser, Ulises Royal
- * @version 10-27-2026
+ * @version 11-25-2026
  * @since 9-26-2026 
  */
 public class FinalProjectDriver{
@@ -60,6 +60,10 @@ public class FinalProjectDriver{
             //creates a roblox games collection, loads a previously saved games collection into
             //newly created games collection, and then updates said information.
             RobloxDataRetriever retriever = new RobloxDataRetriever();
+
+            //this should be displaying how many failed and successful API request set and returned from Roblox
+            System.out.println("This is the total Number of Successful Requests Returned from Roblox: " + retriever.getNumOfSuccessfulRequests());
+            System.out.println("this is the total number of 429 'Too Many Requests' Returned from Roblox: " + retriever.getNumOfTooManyRequests());
 
             System.out.println("Would you like a list in [1] ascending order () or [2] Decending order ()? \nType 1 or 2 for chosen option.");
             

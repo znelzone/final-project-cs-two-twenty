@@ -40,6 +40,8 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
     //when making modifications to this class.
     private static final long serialVersionUID = 8675309L;
     
+    //================================================== CONSTRUCTOR ==================================================
+
     /**
      * Constructs a RobloxGame with the specified information.
      * 
@@ -70,6 +72,8 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
         this.maxPlaying = maxPlaying;
         this.isContentRestricted = isContentRestricted;
     }
+
+    //================================================= METHODS ============================================================
 
     /**
      * Overwrites compareTo inorder to compare two roblox games;
@@ -128,7 +132,7 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
      * @since 11-24-2026
      */
     public String getLimitedInfo(){
-        return "Game Name: " + name + " | Universe ID: " + id + " | Player Count: " + playing;
+        return "Game Name: " + name + " | Universe ID: " + id + " | Player Count: " + playing + " | Max Players: " + maxPlaying;
     }
 
 

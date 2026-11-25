@@ -32,6 +32,13 @@ public class RobloxDataRetriever{
     private HttpClient client;
     private String VOTES_URL = "https://games.roblox.com/v1/games/votes?universeIds=";
 
+    //added to keep track and print out the number of good and bad responses from Roblox' API
+    private int numOfTooManyReqests = 0;
+    private int numOfSuccessfulRequests = 0;
+
+
+    //================================================ CONSTRUCTOR ===================================================
+
     /**
      * Constructs a RobloxDataRetriever, creating the HTTP client used
      * to send request to the Roblox API. Also creates the collection
@@ -76,6 +83,7 @@ public class RobloxDataRetriever{
     ourCollection.save("robloxGames.dat");    
     }
 
+    //========================================= METHODS ====================================================
 
     /**
      * Utilizes prexisiting RobloxGames collection to add random roblox games
@@ -322,17 +330,22 @@ public class RobloxDataRetriever{
                 HttpResponse.BodyHandlers.ofString()
         );
 
-        if(response.statusCode() == 200){
-            //200 is a known status code for request recieved and answered, we don't need to print this code to command line
+        if(response.statusCode() == 200){ // 200 MEANS API REQUEST SUCCEEDED!
+
+            //this call helps keep track of how many successful request's have been recieved and returned
+            incrementNumOfSuccessfulRequests();
             return response.body();
-        } else if (response.statusCode() == 429){ // 429 is known to us, and is reletively important for debugging therefor we need to print when debugging
-            System.out.println(
-                "Roblox returned known status code 429 (rate limit reached) TOO MANY REQUESTS!"
-            );
+
+        } else if (response.statusCode() == 429){ // 429 MEANS TOO MANY REQUESTS!
+            // 429 is known to us, and is reletively important for debugging therefor we need to print when debugging
+            // as of 11-25-2026 as the collection size is growing we're seeing an overwellmingly growing ammount of 429 error prints
+            // seeing as this is cluttering up the command lines display of this program, I will adjust this to keep track of the number
+            // of times we recieve 429 rather than printing each individual 429 print.
+            incrementNumOfTooManyRequests();
             return null;
         }
         //if there was no response from the endpoint
-        //ie anything other than the 200 status code
+        //ie anything other than one of the known status codes above
         //return null
 
         System.out.println("Roblox returned status " + response.statusCode());
@@ -340,6 +353,48 @@ public class RobloxDataRetriever{
         return null;
     }
 
+
+    /**
+     * Provides when called the number of 429 reponse codes received from
+     * running this program.
+     * 
+     * @return an int representation of the number of 429 response codes
+     * @since 11-25-2026
+     */
+    public int getNumOfTooManyRequests(){
+        return numOfTooManyReqests;
+    }
+
+    /**
+     * Provides when called the number of 200 response codes recieved from
+     * running this program.
+     * 
+     * @return an int representaion of the number of 429 response codes
+     * @since 11-25-2026
+     */
+    public int getNumOfSuccessfulRequests(){
+        return numOfSuccessfulRequests;
+    }
+
+    /**
+     * Increments the total num of 429 statis codes when called by
+     * one.
+     * 
+     * @since 11-25-2026
+     */
+    public void incrementNumOfTooManyRequests(){
+        this.numOfTooManyReqests++;                
+    }
+
+    /**
+     * Increments the total num of 200 statis codes when called by
+     * one.
+     * 
+     * @since 11-25-2026
+     */
+    public void incrementNumOfSuccessfulRequests(){
+        this.numOfSuccessfulRequests++;
+    }
 
     /*
     Title: Java's JsonParser.parse() Method Explained
