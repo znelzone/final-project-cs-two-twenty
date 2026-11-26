@@ -55,6 +55,8 @@ public class FinalProjectDriver{
  */
     public static void main(String[] args) throws Exception {
         
+        // View view = new View();
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Would you like to display some Roblox Game Data[Y/N]?");
