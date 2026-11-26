@@ -38,6 +38,8 @@ import javax.swing.table.DefaultTableModel;
      private ArrayList<edu.radford.RobloxGame> games = new ArrayList<>();
      private boolean descending = true;
 
+     //===================================================== CONSTRUCTOR =====================================================
+
      /**
       * Window shows while game data is loading
       */
@@ -58,6 +60,8 @@ import javax.swing.table.DefaultTableModel;
     frame.setVisible(true);
     loadGames();
  }
+
+    //===================================================== METHODS =============================================================
 
      /**
       * Retrieves and sorts game data

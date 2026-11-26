@@ -26,6 +26,12 @@ Utilized this web article for a basic understanding of Java's jsonparser.parse()
 RobloxDataRetriever.java class and the updateGameDataLikes method in the same class:
 [5] A. Obregon, “Java’s jsonparser.parse() method explained | medium,” Medium, https://medium.com/@AlexanderObregon/javas-jsonparser-parse-method-explained-76b126f6110e (accessed Oct. 12, 2026).
 
+Java's Oracle Documentation for Thread's: In this instance we utilized Threads sleep() method to exponentially grow the wait time in ms for our individual API call
+attempts to prevent rate limiting.
+[6] “Thread (Java Platform SE 8 ),” docs.oracle.com. https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html (accessed Nov. 25, 2026).
+
+
+
 */
 
 /**

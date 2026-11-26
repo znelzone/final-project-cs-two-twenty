@@ -19,15 +19,11 @@ import java.io.IOException;
  * Sends HTTP requests to Roblox API endpoints
  * 
  * @author Zackary Nelson, Bradley Patton, Peyton Slusser, Ulises Royal
- * @version 11-18-2026
+ * @version 11-26-2026
  * @since 9-3-2026
  */
 public class RobloxDataRetriever{
 
-//will mainly be the class where we utilize the
-//roblox api to recieve data about our games
-//more than likely this will be the class that
-//will be creating RobloxGame objects
     private RobloxGameCollection ourCollection;
     private HttpClient client;
     private String VOTES_URL = "https://games.roblox.com/v1/games/votes?universeIds=";
@@ -41,13 +37,11 @@ public class RobloxDataRetriever{
 
     /**
      * Constructs a RobloxDataRetriever, creating the HTTP client used
-     * to send request to the Roblox API. Also creates the collection
-     * used to store RobloxGame objects.
+     * to send request to the Roblox API. Also loads and saves the collection
+     * used to retrieve and view Roblox Games throug, will be changed so that
+     * Collection is not loaded and saved here.
      * 
-     * Currently calls initializeGamesTemp() to fill our collection with
-     * while game creation automation is being developed.
-     * 
-     * @version 10-5-2026
+     * @version 11-26-2026
      * @since 9-26-2026
      */
     public RobloxDataRetriever() throws IOException, ClassNotFoundException{
@@ -55,13 +49,16 @@ public class RobloxDataRetriever{
 
     try {
        ourCollection = RobloxGameCollection.load("robloxGames.dat");
-       
-       //if editing RobloxGame
+    
         if(ourCollection == null){
             ourCollection = new RobloxGameCollection(0);
             initializeGamesTemp();
         }
 
+        //I believe the if Statement above now fulfills the use of these lines of commented out code;
+        //I am however keeping them here for the time being for redundancy -- Zack
+        
+        //if editing RobloxGame
     //    ourCollection = new RobloxGameCollection(0);
     //    initializeGamesTemp();
        
@@ -71,9 +68,6 @@ public class RobloxDataRetriever{
 
         System.out.println("Here's the Number of Games in the Collection:");
         System.out.println(ourCollection.getNumberOfGames());
-
-    //for debugging
-    //ourCollection.toString();
        
     } catch (Exception e) {
         e.printStackTrace();
@@ -319,12 +313,25 @@ public class RobloxDataRetriever{
      * @since 10-4-2026
      */
     public String getData(String url) throws Exception {
+        /*
+        Realized along the way we were making WAY TOO MANY REQUESTS, causing alot of themto return to us with the 429 error code and being unable to update alot of our data.
+        Therefor we utilized the Thread.Sleep() method and exponentially grew the wait time for every attempt allowing only 4 attempts for each request.
 
+        Java's Oracle Documentation for Thread's: In this instance we utilized Threads sleep() method to exponentially grow the wait time in ms for our individual call attemtpts.
+        [6] “Thread (Java Platform SE 8 ),” docs.oracle.com. https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html (accessed Nov. 25, 2026).
+        */
+        int MAXATTEMPTS = 4;
+        long waitMs = 1000;
+
+        for (int attempt = 1; attempt <= MAXATTEMPTS; attempt++){
+
+            //REQUEST
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .GET()
                 .build();
 
+        //RESPONSE
         HttpResponse<String> response = client.send(
                 request,
                 HttpResponse.BodyHandlers.ofString()
@@ -341,15 +348,20 @@ public class RobloxDataRetriever{
             // as of 11-25-2026 as the collection size is growing we're seeing an overwellmingly growing ammount of 429 error prints
             // seeing as this is cluttering up the command lines display of this program, I will adjust this to keep track of the number
             // of times we recieve 429 rather than printing each individual 429 print.
+            if (attempt < MAXATTEMPTS){
+                
+                //call threads sleep method; and then increment exponentially the wait time
+                Thread.sleep(waitMs);
+                waitMs *= 2;
+            }
+
             incrementNumOfTooManyRequests();
             return null;
         }
+        System.out.println("Roblox returned status " + response.statusCode());
+        }
         //if there was no response from the endpoint
         //ie anything other than one of the known status codes above
-        //return null
-
-        System.out.println("Roblox returned status " + response.statusCode());
-
         return null;
     }
 
@@ -377,7 +389,7 @@ public class RobloxDataRetriever{
     }
 
     /**
-     * Increments the total num of 429 statis codes when called by
+     * Increments the total num of 429 status codes when called by
      * one.
      * 
      * @since 11-25-2026
@@ -387,7 +399,7 @@ public class RobloxDataRetriever{
     }
 
     /**
-     * Increments the total num of 200 statis codes when called by
+     * Increments the total num of 200 status codes when called by
      * one.
      * 
      * @since 11-25-2026
