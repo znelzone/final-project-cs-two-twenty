@@ -467,12 +467,16 @@ public class RobloxDataRetriever{
                         robloxGame.setRootPlaceID(gameData.get("rootPlaceId").getAsLong());
                         robloxGame.setIsContentRestricted(gameData.get("isContentRestricted").getAsBoolean());
                         robloxGame.updateMaxPlaying(robloxGame.getMaxPlaying(), robloxGame.getPlaying());
+
+                        //record the time when this game's information is being recorded
+                        robloxGame.recordFormattedTime();
+
                         break;
                     }
 
                 }
             }
-
+            Thread.sleep(300);
         }
 
 
@@ -501,38 +505,46 @@ public class RobloxDataRetriever{
      * @since 10-26-2026
      */
     public void updateGameDataLikes() throws Exception{
-        for(RobloxGame robloxGame : ourCollection){
-            
-            long universeID = robloxGame.getID();
-            String url = buildLikesRequestURL(universeID);
-            
-            
-            String json = getData(url);
+        
+        ArrayList<RobloxGame> gameList = new ArrayList<RobloxGame>();
 
+        for (RobloxGame robloxGame : ourCollection){
+            gameList.add(robloxGame);
+        }
+
+        int failedGroupingOfRequests = 0;
+
+        for (int start = 0; start < gameList.size(); start += 50){
+            List<RobloxGame> gameSubList = gameList.subList(start, Math.min(start + 50, gameList.size()));
+
+            StringBuilder ids = new StringBuilder();
+            for(RobloxGame robloxGame : gameSubList){
+                if (ids.length() > 0) ids.append(",");
+                ids.append(robloxGame.getID());
+            }
+
+            String json = getData(VOTES_URL + ids);
             if(json == null){
-                //if the response from the website didn't contain a 200
-                //status code ie didn't send anything back for the program
-                //to use
-                System.out.println("Cound not retrieve data for: " + VOTES_URL);
-            } else {
-                //if a response came back
-                
-                //printing the json response
-                // System.out.println("UpVotes: ");
-                // System.out.println(json + "\n");
+                failedGroupingOfRequests++;
+                continue;
+            }
 
-                //converts API response from java string into JSON structure
-                JsonObject response = JsonParser.parseString(json).getAsJsonObject();
-
-                //get(0) means selecting the first game in the list
-                JsonObject gameData = response.getAsJsonArray("data").get(0).getAsJsonObject();
-
-                int upVote = gameData.get("upVotes").getAsInt();
-                int downVote = gameData.get("downVotes").getAsInt();
-
-                robloxGame.setUpVotes(upVote);
-                robloxGame.setDownVotes(downVote);
-            }   
+            JsonArray data = JsonParser.parseString(json).getAsJsonObject().getAsJsonArray("data");
+            for(JsonElement element : data){
+                JsonObject voteData = element.getAsJsonObject();
+                long id = voteData.get("id").getAsLong();
+                for(RobloxGame robloxGame : gameSubList){
+                    if(robloxGame.getID() == id){
+                        robloxGame.setUpVotes(voteData.get("upVotes").getAsInt());
+                        robloxGame.setDownVotes(voteData.get("downVotes").getAsInt());
+                        break;
+                    }
+                }
+            }
+            Thread.sleep(300);
+        }
+        if (failedGroupingOfRequests > 0){
+            System.out.println("Could not retrieve Vote Data for " + failedGroupingOfRequests + " Group(ings) of games.");
         }
     }
 

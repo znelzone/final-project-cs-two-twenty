@@ -1,12 +1,30 @@
+//===================== CITATIONS ==========================
+    
+/*
+Utilizes the LocalDateTime Class' now() method to record the time when a roblox game is being recorded. The
+Now() method is utilized in the recordFormattedTime() method in this RobloxGame Class.
+[7] “LocalDateTime (Java Platform SE 8 ),” docs.oracle.com. https://docs.oracle.com/javase/8/docs/api/java/time/LocalDateTime.html (accessed Nov. 26, 2026).
+
+This RobloxGame class utilizes the ofPattern() method from the DateTimeFormatter Class to format the time returned
+by the Now() method to turn the returned infomration from the now message as a String representation of the time
+of record.
+[8] “DateTimeFormatter (Java Platform SE 8 ),” docs.oracle.com. https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html (accessed Nov. 26, 2026).
+
+*/
+    
+//======================== CODE ===========================
+
 package edu.radford;
 import java.io.Serializable;
 import java.lang.Comparable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * RobloxGame represents a game from the website Roblox.
  * 
  * @author Zackary Nelson, Bradley Patton, Peyton Slusser, and Ulises Royal
- * @version 10-27-2026
+ * @version 11-26-2026
  * @since 9-26-2026
  */
 public class RobloxGame implements Serializable, Comparable<RobloxGame>{
@@ -39,6 +57,9 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
     //explicitly declared serilization ID declared to avoid InvalidClassException
     //when making modifications to this class.
     private static final long serialVersionUID = 8675309L;
+
+    //location of the exact time and date the game's information was recorded
+    private String formattedTime;
     
     //================================================== CONSTRUCTOR ==================================================
 
@@ -121,7 +142,8 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
                 "\nFavorites: " + favoritedCount +
                 "\nUpVotes: " + upVotes +
                 "\nDownVotes: " + downVotes +
-                "\nPast Top Player Count: " + maxPlaying;
+                "\nPast Top Player Count: " + maxPlaying +
+                "\nTime Recorded: " + formattedTime;
     }
 
     /**
@@ -132,7 +154,7 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
      * @since 11-24-2026
      */
     public String getLimitedInfo(){
-        return "Game Name: " + name + " | Universe ID: " + id + " | Player Count: " + playing + " | Max Players: " + maxPlaying;
+        return "Game Name: " + name + " | Universe ID: " + id + " | Player Count: " + playing + " | Max Players: " + maxPlaying + " | Time Recorded: " + formattedTime;
     }
 
 
@@ -221,6 +243,16 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
     }
 
     /**
+     * Returns a String representation of the time the game was recorded.
+     * 
+     * @return a string representation of the time the game was recorded
+     * @since 11-26-2026
+     */
+    public String getFormattedTime(){
+        return formattedTime;
+    }
+
+    /**
      * Returns an integer representing the total number of upVotes this game
      * has received.
      * 
@@ -242,8 +274,21 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
         return maxPlaying;
     }
 
+
+    //==================================================== RECORD ==============================================
     
-    //setters for RobloxGame
+    /**
+     * Records the current time in a month/day/year/time format.
+     * 
+     * @since 11-26-2026
+     */
+    public void recordFormattedTime(){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm");
+        this.formattedTime = LocalDateTime.now().format(formatter);
+    }
+    
+    //==================================================== SETTERS =============================================
 
     /**
      * Sets the current count of Down Votes for this Roblox Game.

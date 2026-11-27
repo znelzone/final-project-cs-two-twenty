@@ -1,10 +1,4 @@
-package edu.radford;
-import java.util.Scanner;
-// import java.net.URI;
-// import java.net.http.HttpRequest;
-// import java.net.http.HttpResponse;
-// import com.google.gson.Gson;
-import java.util.ArrayList;
+//============================== CITATIONS ======================================
 
 /*
 Sources:
@@ -30,9 +24,25 @@ Java's Oracle Documentation for Thread's: In this instance we utilized Threads s
 attempts to prevent rate limiting.
 [6] “Thread (Java Platform SE 8 ),” docs.oracle.com. https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html (accessed Nov. 25, 2026).
 
+Utilizes the LocalDateTime Class' now() method to record the time when a roblox game is being recorded. The now() method is utilized in the recordFormattedTime() method in the Roblox
+Game Class.
+[7] “LocalDateTime (Java Platform SE 8 ),” docs.oracle.com. https://docs.oracle.com/javase/8/docs/api/java/time/LocalDateTime.html (accessed Nov. 26, 2026).
 
+The RobloxGame Class utilizes the ofPattern() method from the DateTimeFormatter Class to format the time returned by the now() method to turn the returned information from the now message
+as a String representation of the time of record.
+[8] “DateTimeFormatter (Java Platform SE 8 ),” docs.oracle.com. https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html (accessed Nov. 26, 2026).
 
 */
+
+// ========================================= CODE ===================================
+
+package edu.radford;
+import java.util.Scanner;
+// import java.net.URI;
+// import java.net.http.HttpRequest;
+// import java.net.http.HttpResponse;
+// import com.google.gson.Gson;
+import java.util.ArrayList;
 
 /**
  * Driver class used to start the data capture/final project program.
