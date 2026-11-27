@@ -34,7 +34,7 @@ as a String representation of the time of record.
 
 */
 
-// ========================================= CODE ===================================
+// ========================================= IMPORTS AND PACKAGES ===================================
 
 package edu.radford;
 import java.util.Scanner;
@@ -43,6 +43,8 @@ import java.util.Scanner;
 // import java.net.http.HttpResponse;
 // import com.google.gson.Gson;
 import java.util.ArrayList;
+
+// ========================================= CODE ===================================
 
 /**
  * Driver class used to start the data capture/final project program.
@@ -53,6 +55,8 @@ import java.util.ArrayList;
  */
 public class FinalProjectDriver{
 
+
+// ======================================== MAIN METHOD / CONSTRUCTOR ======================
 
 /**
  * Main method used to start the program. The user is prompted

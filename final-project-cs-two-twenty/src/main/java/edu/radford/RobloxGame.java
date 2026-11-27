@@ -12,6 +12,9 @@ of record.
 
 */
     
+//this is the citation for the history stuff involving record
+//[9] https://docs.oracle.com/en/java/javase/17/language/records.html#GUID-6699E26F-4A9B-4393-A08B-1E47D4B2D263
+
 //======================== CODE ===========================
 
 package edu.radford;
@@ -54,6 +57,9 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
     //the max count of players in the games past
     private int maxPlaying; 
 
+    //will be calculated as a ratio of likes to dislikes
+    private double likeRatio;
+
     //explicitly declared serilization ID declared to avoid InvalidClassException
     //when making modifications to this class.
     private static final long serialVersionUID = 8675309L;
@@ -78,6 +84,7 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
      * @param downVotes the downVote count for this Roblox game
      * @param maxPlaying the sum of historical player counts for this Roblox game
      * @param serialVersionUID the Long representation of this objects serialVersionUID
+     * @param likeRatio the double representation of the like-to-dislike ratio
      */
     public RobloxGame(String name, long rootPlaceId, long id, int playing, String genre, long visits, int favoritedCount,
         int upVotes, int downVotes, int maxPlaying, Boolean isContentRestricted){
@@ -112,6 +119,22 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
         return Integer.compare(this.playing, other.playing);
     }
 
+    /**
+     * Calculates a like-to-dislike percentage.
+     * 
+     * @param upVotes The count of upVotes or likes that this game has recieved
+     * @param downVotes the count of downVotes or dislikes that this game has recieved
+     * @return a double representation of the percetage of likes to dislikes
+     * @since 11-27-2026
+     */
+    public double calcLikeToDislike(int upVotes, int downVotes){
+        int total = upVotes + downVotes;
+        if (total == 0){
+            return 0.0; //not votes yet; avoids division by 0
+        }
+        return ((double) upVotes / total) * 100;
+    }
+
 
     //getters for robloxGame
     
@@ -142,6 +165,7 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
                 "\nFavorites: " + favoritedCount +
                 "\nUpVotes: " + upVotes +
                 "\nDownVotes: " + downVotes +
+                "\nLike-To-Dislike Percentage: " + Math.round(calcLikeToDislike(getUpVotes(), getDownVotes()) * 10) / 10.0 +
                 "\nPast Top Player Count: " + maxPlaying +
                 "\nTime Recorded: " + formattedTime;
     }
@@ -154,7 +178,13 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
      * @since 11-24-2026
      */
     public String getLimitedInfo(){
-        return "Game Name: " + name + " | Universe ID: " + id + " | Player Count: " + playing + " | Max Players: " + maxPlaying + " | Time Recorded: " + formattedTime;
+        return 
+            "Game Name: " + name + 
+            " | Universe ID: " + id + 
+            " | Player Count: " + playing + 
+            " | Max Players: " + maxPlaying + 
+            " | Time Recorded: " + formattedTime + 
+            " | Like-To-Dislike Ratio: " + Math.round(calcLikeToDislike(getUpVotes(), getDownVotes()) * 10) / 10.0;
     }
 
 

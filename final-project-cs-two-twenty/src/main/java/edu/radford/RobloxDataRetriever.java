@@ -1,3 +1,15 @@
+//============================== CITATIONS ============================
+
+/*
+Realized along the way we were making WAY TOO MANY REQUESTS, causing alot of themto return to us with the 429 error code and being unable to update alot of our data.
+Therefor we utilized the Thread.Sleep() method and exponentially grew the wait time for every attempt allowing only 4 attempts for each request.
+
+Java's Oracle Documentation for Thread's: In this instance we utilized Threads sleep() method to exponentially grow the wait time in ms for our individual call attemtpts.
+[6] “Thread (Java Platform SE 8 ),” docs.oracle.com. https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html (accessed Nov. 25, 2026).
+*/
+
+//============================= IMPORTS AND PACKAGES ====================
+
 package edu.radford;
 import java.net.http.HttpClient;
 import java.net.URI;
@@ -13,6 +25,8 @@ import com.google.gson.JsonElement;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
+
+//============================== CODE ===================================
 
 /**
  * Retreives data about Roblox Games from the Roblox API.
@@ -313,13 +327,7 @@ public class RobloxDataRetriever{
      * @since 10-4-2026
      */
     public String getData(String url) throws Exception {
-        /*
-        Realized along the way we were making WAY TOO MANY REQUESTS, causing alot of themto return to us with the 429 error code and being unable to update alot of our data.
-        Therefor we utilized the Thread.Sleep() method and exponentially grew the wait time for every attempt allowing only 4 attempts for each request.
-
-        Java's Oracle Documentation for Thread's: In this instance we utilized Threads sleep() method to exponentially grow the wait time in ms for our individual call attemtpts.
-        [6] “Thread (Java Platform SE 8 ),” docs.oracle.com. https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.html (accessed Nov. 25, 2026).
-        */
+        
         int MAXATTEMPTS = 4;
         long waitMs = 1000;
 

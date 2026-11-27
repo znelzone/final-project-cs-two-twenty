@@ -1,3 +1,5 @@
+// =================================== CITATIONS =========================================
+
 /*
 Data Structure and Class adapted from
 Title: Java Software Structures
@@ -8,6 +10,8 @@ Type: Source Code
 IEEE Citation: [2] J. Lewis and J. Chase, Java software structures : Designing and using data structures, 4th ed.
                 United States of America: Pearson Education Limited, 2014, pp. 133-134.
  */
+
+//================================== IMPORTS AND PACKAGES =================================
 
 package edu.radford;
 import java.io.FileInputStream;
@@ -20,6 +24,8 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+//=============================== CODE =================================
 
 /**
  * Represents a RobloxGameCollection, a list of games retreived from the Roblox
@@ -37,6 +43,8 @@ public class RobloxGameCollection implements Iterable<RobloxGame>, Serializable{
     private int numberOfGames;
 
     private static final long serialVersionUID = 980L;
+
+// ===================================== CONSTRUCTOR ===========================
 
     /**
      * Constructs an initially empty linkedlist of RobloxGames
