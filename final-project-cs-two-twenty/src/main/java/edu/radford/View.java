@@ -32,6 +32,8 @@ import javax.swing.table.DefaultTableModel;
      };
      private JTable table = new JTable(model);
      private JButton orderButton = new JButton("Order: Highest to Lowest");
+     private JTextField searchField = new JTextField(20);
+     private JButton searchButton = new JButton("Search");
      private JLabel status = new JLabel("Getting game data...");
      private SwingWorker<ArrayList<edu.radford.RobloxGame>,Void> worker;
      //sorted by player count lowest to highest
@@ -46,12 +48,21 @@ import javax.swing.table.DefaultTableModel;
  public View() {
     orderButton.setEnabled(false);
     orderButton.addActionListener(this);
+    searchButton.addActionListener(e->searchGame());
+    searchField.addActionListener(e->searchGame());
     table.setFillsViewportHeight(true);
     table.getColumnModel().getColumn(0).setPreferredWidth(20);
     table.getColumnModel().getColumn(1).setPreferredWidth(350);
     table.getColumnModel().getColumn(2).setPreferredWidth(150);
     frame.setLayout(new BorderLayout());
-    frame.add(orderButton,BorderLayout.NORTH);
+    JPanel searchPanel=new JPanel();
+    searchPanel.add(new JLabel("Game Name or Universe ID:"));
+    searchPanel.add(searchField);
+    searchPanel.add(searchButton);
+    JPanel topPanel=new JPanel(new BorderLayout());
+    topPanel.add(searchPanel,BorderLayout.NORTH);
+    topPanel.add(orderButton,BorderLayout.SOUTH);
+    frame.add(topPanel,BorderLayout.NORTH);
     frame.add(new JScrollPane(table),BorderLayout.CENTER);
     frame.add(status, BorderLayout.SOUTH);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -110,6 +121,47 @@ import javax.swing.table.DefaultTableModel;
          model.addRow(new Object[]{rank,game.getName(),String.format("%,d", game.getPlaying())});
 
      }
+     private void searchGame(){
+         String query=searchField.getText().trim();
+         if(query.isEmpty()){
+             JOptionPane.showMessageDialog(frame,"Please enter a game name or Universe ID.");
+             return;
+         }
+         searchButton.setEnabled(false);
+         searchField.setEnabled(false);
+         SwingWorker<String,Void> searchWorker=new SwingWorker<String,Void>(){
+             @Override
+             protected String doInBackground() throws Exception{
+                 RobloxDataRetriever retriever=new RobloxDataRetriever(true);
+                 if(query.matches("\\d+")){
+                     RobloxGame game=retriever.getGameByUniverseID(Long.parseLong(query));
+                     return game==null?"Game not found.":game.getInfo();
+                 }
+                 ArrayList<RobloxGame> results=retriever.searchGames(query);
+                 StringBuilder output=new StringBuilder();
+                 for(RobloxGame game:results){
+                     output.append(game.getName()).append(" - ").append(game.getID()).append("\n");
+                 }
+                 return results.isEmpty()?"No games found.":output.toString();
+             }
+             @Override
+             protected void done(){
+                 try{
+                     JTextArea resultsArea=new JTextArea(get(),20,45);
+                     resultsArea.setEditable(false);
+                     resultsArea.setCaretPosition(0);
+                     JOptionPane.showMessageDialog(frame,new JScrollPane(resultsArea),"Search Results",JOptionPane.INFORMATION_MESSAGE);
+                 }catch(Exception ex){
+                     JOptionPane.showMessageDialog(frame,"Search failed: "+ex.getMessage());
+                 }finally{
+                     searchButton.setEnabled(true);
+                     searchField.setEnabled(true);
+                 }
+             }
+         };
+         searchWorker.execute();
+     }
+
 
      /**
       * Makes button work
