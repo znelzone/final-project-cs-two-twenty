@@ -62,7 +62,7 @@ public class FinalProjectDriver{
             RobloxDataRetriever retriever = new RobloxDataRetriever();
 
             System.out.println("Would you like a list in [1] ascending order () or [2] Decending order ()? \nType 1 or 2 for chosen option.");
-            
+
             int sortChoice = scanner.nextInt();
 
             //creates object that can sort games

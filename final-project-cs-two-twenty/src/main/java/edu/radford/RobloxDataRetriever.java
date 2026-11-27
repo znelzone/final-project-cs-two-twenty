@@ -76,6 +76,22 @@ public class RobloxDataRetriever{
     ourCollection.save("robloxGames.dat");    
     }
 
+    /**
+     * Constructs a retriever with optional automatic updates.
+     *
+     * @param searchOnly true to initialize without bulk updates
+     */
+    public RobloxDataRetriever(boolean searchOnly)
+            throws IOException, ClassNotFoundException {
+        if (!searchOnly) {
+            throw new IllegalArgumentException(
+                    "Use the default constructor for full updates.");
+        }
+
+        client = HttpClient.newHttpClient();
+        ourCollection = new RobloxGameCollection(0);
+    }
+
 
     /**
      * Utilizes prexisiting RobloxGames collection to add random roblox games
@@ -142,6 +158,121 @@ public class RobloxDataRetriever{
         System.out.println("Added " + added + " new games");
     }
 
+
+    public ArrayList<RobloxGame> searchGames(String gameName) throws Exception {
+
+        ArrayList<RobloxGame> results = new ArrayList<>();
+
+        if (gameName == null || gameName.isBlank()) {
+            return results;
+        }
+
+        String url = buildRandUniverseRequestURL(gameName.trim());
+        String json = getData(url);
+
+        if (json == null) {
+            throw new IOException("Unable to retrieve search results.");
+        }
+
+        JsonObject response = JsonParser.parseString(json).getAsJsonObject();
+
+        JsonArray searchResults = response.getAsJsonArray("searchResults");
+
+        if (searchResults == null) {
+            return results;
+        }
+
+        for (JsonElement result : searchResults) {
+
+            JsonArray contents = result.getAsJsonObject()
+                    .getAsJsonArray("contents");
+
+            if (contents == null) {
+                continue;
+            }
+
+            for (JsonElement element : contents) {
+
+                JsonObject gameData = element.getAsJsonObject();
+
+                if (!gameData.has("universeId") || !gameData.has("name")) {
+                    continue;
+                }
+
+                long universeID = gameData.get("universeId").getAsLong();
+                String name = gameData.get("name").getAsString();
+
+                RobloxGame game = new RobloxGame(
+                        name, 0, universeID, 0, null,
+                        0, 0, 0, 0, 0, null
+                );
+
+                results.add(game);
+            }
+        }
+
+        return results;
+    }
+
+    /**
+     * Retrieves individual game statistics by Universe ID.
+     *
+     * @param universeID the Universe ID of the game
+     * @return the RobloxGame containing its statistics,
+     *         or null if the game is not found
+     * @throws Exception if an API request fails
+     */
+    public RobloxGame getGameByUniverseID(long universeID)
+            throws Exception {
+
+        String json = getData(buildMainRequestURL(universeID));
+
+        if (json == null) {
+            throw new IOException("Unable to retrieve game data.");
+        }
+
+        JsonArray data = JsonParser.parseString(json)
+                .getAsJsonObject().getAsJsonArray("data");
+
+        if (data == null || data.size() == 0) {
+            return null;
+        }
+
+        JsonObject gameData = data.get(0).getAsJsonObject();
+
+        RobloxGame game = new RobloxGame(
+                gameData.get("name").getAsString(),
+                0, universeID, 0, null, 0, 0, 0, 0, 0, null);
+
+        game.setPlaying(gameData.get("playing").getAsInt());
+        game.setVisits(gameData.get("visits").getAsLong());
+        game.setFavoritedCount(gameData.get("favoritedCount").getAsInt());
+        game.setGenre(gameData.get("genre").getAsString());
+        game.setRootPlaceID(gameData.get("rootPlaceId").getAsLong());
+        game.setIsContentRestricted(
+                gameData.get("isContentRestricted").getAsBoolean());
+
+        String votesJson = getData(buildLikesRequestURL(universeID));
+
+        if (votesJson == null) {
+            throw new IOException("Unable to retrieve game votes.");
+        }
+
+        JsonArray votes = JsonParser.parseString(votesJson)
+                .getAsJsonObject().getAsJsonArray("data");
+
+        if (votes == null || votes.size() == 0) {
+            throw new IOException("Game votes not found.");
+        }
+
+        JsonObject voteData = votes.get(0).getAsJsonObject();
+
+        game.setUpVotes(voteData.get("upVotes").getAsInt());
+        game.setDownVotes(voteData.get("downVotes").getAsInt());
+
+        return game;
+    }
+
     /**
      * Generates a random number between 0 to the total number
      * of games held in ourCollection.
@@ -178,7 +309,7 @@ public class RobloxDataRetriever{
      * Creates a String representing a URL API request that concatinates
      * a universeID into the URL.
      * 
-     * @param long long representation of a universeId
+     * @param id long representation of a universeId
      * @return String containing a URL concatination
      * @since 10-3-2026
      */
@@ -193,7 +324,7 @@ public class RobloxDataRetriever{
      * a universeID onto the end of the VOTES_URL constant.
      * 
      * 
-     * @param long long representation of a universeId
+     * @param id long representation of a universeId
      * @return String containing a URL concatination
      * @since 10-26-2026
      */
