@@ -33,7 +33,7 @@ import java.io.IOException;
  * Sends HTTP requests to Roblox API endpoints
  * 
  * @author Zackary Nelson, Bradley Patton, Peyton Slusser, Ulises Royal
- * @version 11-26-2026
+ * @version 11-27-2026
  * @since 9-3-2026
  */
 public class RobloxDataRetriever{
@@ -79,6 +79,8 @@ public class RobloxDataRetriever{
         addRandomGames();
         updateGameData();
         updateGameDataLikes();
+        recordHistory();
+        
 
         System.out.println("Here's the Number of Games in the Collection:");
         System.out.println(ourCollection.getNumberOfGames());
@@ -92,7 +94,21 @@ public class RobloxDataRetriever{
     }
 
     //========================================= METHODS ====================================================
-    
+
+    /**
+     * Records a snapshot of a game.
+     * 
+     * @since 11-27-2026
+     */
+    public void recordHistory(){
+        for(RobloxGame robloxGame : ourCollection){
+            //skip games that failed to update ie their name is null
+            if(robloxGame.getName() != null){
+                robloxGame.recordSnapshot();
+            }
+        }
+    }
+
     /**
      * Constructs a retriever with optional automatic updates.
      *
@@ -610,6 +626,7 @@ public class RobloxDataRetriever{
 
                         //record the time when this game's information is being recorded
                         robloxGame.recordFormattedTime();
+                        robloxGame.recordNonFormattedTime();
 
                         break;
                     }

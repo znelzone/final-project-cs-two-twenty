@@ -27,7 +27,7 @@ import java.time.format.DateTimeFormatter;
  * RobloxGame represents a game from the website Roblox.
  * 
  * @author Zackary Nelson, Bradley Patton, Peyton Slusser, and Ulises Royal
- * @version 11-26-2026
+ * @version 11-27-2026
  * @since 9-26-2026
  */
 public class RobloxGame implements Serializable, Comparable<RobloxGame>{
@@ -67,6 +67,9 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
     //location of the exact time and date the game's information was recorded
     private String formattedTime;
     private LocalDateTime nonFormattedTime;
+
+    //an ArrayList of snapshots of RobloxGames will be saved in this
+    private RobloxDataHistory history;
     
     
     //================================================== CONSTRUCTOR ==================================================
@@ -253,6 +256,19 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
     }
 
     /**
+     * Returns an ArrayList of the history of this Roblox Game.
+     * 
+     * @return ArrayList of the history of this Roblox Game
+     * @since 11-27-2026
+     */
+    public RobloxDataHistory getHistory(){
+        if (history == null){
+            history = new RobloxDataHistory();
+        }
+        return history;
+    }
+
+    /**
      * Returns a long that represents the number of total visits this
      * game has received.
      * 
@@ -292,7 +308,7 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
      * @return A string representation of the time the game was recorded
      * @since 11-27-2026
      */
-    public String getNonFormattedTime(){
+    public LocalDateTime getNonFormattedTime(){
         return nonFormattedTime;
     }
 
@@ -340,6 +356,15 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
     public  void recordNonFormattedTime(){
         this.nonFormattedTime = LocalDateTime.now();
     }
+
+    /**
+     * 
+     */
+    public void recordSnapshot(){
+        getHistory().addSnapshot(this);
+    }
+
+
     
     //==================================================== SETTERS =============================================
 
