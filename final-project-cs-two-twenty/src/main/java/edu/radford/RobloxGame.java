@@ -66,6 +66,8 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
 
     //location of the exact time and date the game's information was recorded
     private String formattedTime;
+    private LocalDateTime nonFormattedTime;
+    
     
     //================================================== CONSTRUCTOR ==================================================
 
@@ -273,13 +275,25 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
     }
 
     /**
-     * Returns a String representation of the time the game was recorded.
+     * Returns a String representation of the time the game was recorded in a human friendly
+     * readable format.
      * 
      * @return a string representation of the time the game was recorded
      * @since 11-26-2026
      */
     public String getFormattedTime(){
         return formattedTime;
+    }
+
+    /**
+     * Returns a string representation of the time the game was recorded in a computer friendly
+     * fomrat.
+     * 
+     * @return A string representation of the time the game was recorded
+     * @since 11-27-2026
+     */
+    public String getNonFormattedTime(){
+        return nonFormattedTime;
     }
 
     /**
@@ -316,6 +330,15 @@ public class RobloxGame implements Serializable, Comparable<RobloxGame>{
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm");
         this.formattedTime = LocalDateTime.now().format(formatter);
+    }
+
+    /**
+     * Records the current time in a computer friendly format that could be used for sorrting.
+     * 
+     * @since 11-27-2026
+     */
+    public  void recordNonFormattedTime(){
+        this.nonFormattedTime = LocalDateTime.now();
     }
     
     //==================================================== SETTERS =============================================
