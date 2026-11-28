@@ -121,6 +121,11 @@ import javax.swing.table.DefaultTableModel;
          model.addRow(new Object[]{rank,game.getName(),String.format("%,d", game.getPlaying())});
 
      }
+
+     /**
+      * Search bar function
+      */
+     
      private void searchGame(){
          String query=searchField.getText().trim();
          if(query.isEmpty()){
