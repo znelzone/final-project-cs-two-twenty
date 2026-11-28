@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JComboBox;
 
  /**
   * Swing GUI that shows up to 20 Roblox games in a table
@@ -35,6 +36,8 @@ import javax.swing.table.DefaultTableModel;
      private JTextField searchField = new JTextField(20);
      private JButton searchButton = new JButton("Search");
      private JLabel status = new JLabel("Getting game data...");
+     private JComboBox<String> sortByBox = new JComboBox<>(new String[]{"Player Count","Likes","Likes to Dislikes"});
+     private JComboBox<String> numOfGamesBox = new JComboBox<>(new String[]{"Games Displayed:20","Games Displayed:50","Games Displayed:100","Games Displayed:500"});
      private SwingWorker<ArrayList<edu.radford.RobloxGame>,Void> worker;
      //sorted by player count lowest to highest
      private ArrayList<edu.radford.RobloxGame> games = new ArrayList<>();
@@ -48,6 +51,8 @@ import javax.swing.table.DefaultTableModel;
  public View() {
     orderButton.setEnabled(false);
     orderButton.addActionListener(this);
+    sortByBox.addActionListener(this);
+    sortByBox.setEnabled(true);
     searchButton.addActionListener(e->searchGame());
     searchField.addActionListener(e->searchGame());
     table.setFillsViewportHeight(true);
@@ -61,7 +66,9 @@ import javax.swing.table.DefaultTableModel;
     searchPanel.add(searchButton);
     JPanel topPanel=new JPanel(new BorderLayout());
     topPanel.add(searchPanel,BorderLayout.NORTH);
-    topPanel.add(orderButton,BorderLayout.SOUTH);
+    topPanel.add(orderButton,BorderLayout.CENTER);
+    topPanel.add(sortByBox,BorderLayout.WEST);
+    topPanel.add(numOfGamesBox,BorderLayout.EAST);
     frame.add(topPanel,BorderLayout.NORTH);
     frame.add(new JScrollPane(table),BorderLayout.CENTER);
     frame.add(status, BorderLayout.SOUTH);
@@ -169,7 +176,7 @@ import javax.swing.table.DefaultTableModel;
 
 
      /**
-      * Makes button work
+      * Makes button work and drop box work
       */
 
      @Override
@@ -177,6 +184,16 @@ import javax.swing.table.DefaultTableModel;
          descending= !descending;
          refreshTable();
      }
+//     public void actionPerformed(ActionEvent e){
+//         if (e.getSource() = sortByBox){
+//             playerCount = sortByBox.getSelectedIndex() = 0;
+//         } else if {
+//             likes = sortByBox.getSelectedIndex() = 1;
+//         } else {
+//             likeToDislike = sortByBox.getSelectedIndex() = 2;
+//         }
+//         refreshTable();
+//     }
 
      /**
       *
