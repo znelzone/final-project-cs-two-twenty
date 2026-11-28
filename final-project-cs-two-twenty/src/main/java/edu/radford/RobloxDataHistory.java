@@ -1,3 +1,14 @@
+//=============================== CITATIONS ========================================
+
+/*
+
+[9] record class
+
+https://docs.oracle.com/en/java/javase/17/language/records.html#GUID-6699E26F-4A9B-4393-A08B-1E47D4B2D263
+
+*/
+
+
 // ============================== IMPORTS / PACKAGES ===============================
 package edu.radford;
 import java.io.Serializable;

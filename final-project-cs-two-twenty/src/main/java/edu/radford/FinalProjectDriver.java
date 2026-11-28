@@ -32,6 +32,10 @@ The RobloxGame Class utilizes the ofPattern() method from the DateTimeFormatter 
 as a String representation of the time of record.
 [8] “DateTimeFormatter (Java Platform SE 8 ),” docs.oracle.com. https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html (accessed Nov. 26, 2026).
 
+[9] record class
+
+https://docs.oracle.com/en/java/javase/17/language/records.html#GUID-6699E26F-4A9B-4393-A08B-1E47D4B2D263
+
 */
 
 // ========================================= IMPORTS AND PACKAGES ===================================
